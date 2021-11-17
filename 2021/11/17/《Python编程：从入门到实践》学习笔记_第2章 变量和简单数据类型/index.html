@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Python编程：从入门到实践》学习笔记_第2章 变量和简单数据类型 | 天了噜Rex的杂物堆</title><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第2章 变量和简单数据类型 2.1 运行 hello_world.py 时发生的情况运行文件hello_world.py时，末尾的.py指出这是一个Python程序，因此编辑器将使用Python解释器来运行它。Python解释器读取整个程序，确定其中每个单词的含义。例如，看到单词print时，解释器就会将括号中的内容打印到屏幕，而不会管括号中的内容是什么。 编写程序时，编辑器会以各种方式突出程序的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Python编程：从入门到实践》学习笔记_第2章 变量和简单数据类型">
+<meta property="og:url" content="http://example.com/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC2%E7%AB%A0%20%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="第2章 变量和简单数据类型 2.1 运行 hello_world.py 时发生的情况运行文件hello_world.py时，末尾的.py指出这是一个Python程序，因此编辑器将使用Python解释器来运行它。Python解释器读取整个程序，确定其中每个单词的含义。例如，看到单词print时，解释器就会将括号中的内容打印到屏幕，而不会管括号中的内容是什么。 编写程序时，编辑器会以各种方式突出程序的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-11-17T12:31:50.000Z">
+<meta property="article:modified_time" content="2021-11-17T12:34:00.826Z">
+<meta property="article:author" content="天了噜Rex">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC2%E7%AB%A0%20%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Python编程：从入门到实践》学习笔记_第2章 变量和简单数据类型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-17 20:34:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《Python编程：从入门到实践》学习笔记_第2章 变量和简单数据类型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-11-17T12:31:50.000Z" title="Created 2021-11-17 20:31:50">2021-11-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-11-17T12:34:00.826Z" title="Updated 2021-11-17 20:34:00">2021-11-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《Python编程：从入门到实践》学习笔记_第2章 变量和简单数据类型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第2章-变量和简单数据类型"><a href="#第2章-变量和简单数据类型" class="headerlink" title="第2章 变量和简单数据类型"></a>第2章 变量和简单数据类型</h1><hr>
+<h2 id="2-1-运行-hello-world-py-时发生的情况"><a href="#2-1-运行-hello-world-py-时发生的情况" class="headerlink" title="2.1 运行 hello_world.py 时发生的情况"></a>2.1 运行 hello_world.py 时发生的情况</h2><p>运行文件hello_world.py时，末尾的.py指出这是一个Python程序，因此编辑器将使用Python解释器来运行它。Python解释器读取整个程序，确定其中每个单词的含义。例如，看到单词print时，解释器就会将括号中的内容打印到屏幕，而不会管括号中的内容是什么。</p>
+<p>编写程序时，编辑器会以各种方式突出程序的不同部分。例如，它知道print是一个函数的名称，因此将其显示为蓝色；它知道“Hello Python world!”不是Python代码，因此将其显示为橙色。这种功能称为<strong>语法突出</strong>。</p>
+<hr>
+<h2 id="2-2-变量"><a href="#2-2-变量" class="headerlink" title="2.2 变量"></a>2.2 变量</h2><p>下面来尝试在hello_world.py中使用一个变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;Hello Python world!&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(message)</span><br></pre></td></tr></table></figure>
+<p>运行这个程序，看看结果如何。你会发现，输出与以前相同：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python world! </span><br></pre></td></tr></table></figure>
+<p>我们添加了一个名为message的变量。每个变量都存储了一个值——与变量相关联的信息。在这里，存储的值为文本“Hello Python world!”。</p>
+<p>下面来进一步扩展这个程序：修改hello_world.py，使其再打印一条消息。为此，在hello_world.py中添加一个空行，再添加下面两行代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;Hello Python world!&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line">message = <span class="string">&quot;Hello Python Crash Course world!&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(message) </span><br></pre></td></tr></table></figure>
+<p>现在如果运行这个程序，将看到两行输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello Python world! </span><br><span class="line">Hello Python Crash Course world! </span><br></pre></td></tr></table></figure>
+<h3 id="2-2-1-变量的命名和使用"><a href="#2-2-1-变量的命名和使用" class="headerlink" title="2.2.1 变量的命名和使用"></a>2.2.1 变量的命名和使用</h3><p>请务必牢记下述有关变量的规则：<br> 变量名只能包含字母、数字和下划线。变量名可以字母或下划线打头，但不能以数字打头，例如，可将变量命名为message_1，但不能将其命名为1_message。</p>
+<p> 变量名不能包含空格，但可使用下划线来分隔其中的单词。例如，变量名greeting_message可行，但变量名greeting message会引发错误。</p>
+<p> 不要将Python关键字和函数名用作变量名，即不要使用Python保留用于特殊用途的单词，如print。</p>
+<p> 变量名应既简短又具有描述性。例如，name比n好，student_name比s_n好，name_length比length_of_persons_name好。</p>
+<p> 慎用小写字母l和大写字母O，因为它们可能被人错看成数字1和0。</p>
+<p>==注：就目前而言，应使用小写的Python变量名。在变量名中使用大写字母虽然不会导致错误，但避免使用大写字母是个不错的主意。==</p>
+<h3 id="2-2-2-使用变量时避免命名错误"><a href="#2-2-2-使用变量时避免命名错误" class="headerlink" title="2.2.2 使用变量时避免命名错误"></a>2.2.2 使用变量时避免命名错误</h3><p>我们将有意地编写一些引发错误的代码。请输入下面的代码，包括其中拼写不正确的单词mesage：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;Hello Python Crash Course reader!&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(mesage) </span><br></pre></td></tr></table></figure>
+
+<p>程序存在错误时，Python解释器将竭尽所能地帮助你找出问题所在。程序无法成功地运行时，解释器会提供一个traceback。traceback是一条记录，指出了解释器尝试运行代码时，在什么地方陷入了困境。下面是你不小心错误地拼写了变量名时，Python解释器提供的traceback：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last): </span><br><span class="line">File &quot;hello_world.py&quot;, line 2, in &lt;module&gt; </span><br><span class="line">print(mesage) </span><br><span class="line">NameError: name &#x27;mesage&#x27; is not defined </span><br></pre></td></tr></table></figure>
+
+<p>解释器指出，文件hello_world.py的第2行存在错误；它列出了这行代码，旨在帮助你<br>快速找出错误；它还指出了它发现的是什么样的错误。在这里，解释器发现了一<br>个名称错误，并指出打印的变量mesage未定义：Python无法识别你提供的变量名。名称错误通常意味着两种情况：要么是使用变量前忘记了给它赋值，要么是输入变量名时拼写不正确。</p>
+<hr>
+<h2 id="2-3-字符串"><a href="#2-3-字符串" class="headerlink" title="2.3 字符串"></a>2.3 字符串</h2><p>字符串就是一系列字符。在Python中，用引号括起的都是字符串，其中的引号可以是单引号，也可以是双引号，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;This is a string.&quot;</span> </span><br><span class="line"><span class="string">&#x27;This is also a string.&#x27;</span> </span><br></pre></td></tr></table></figure>
+
+<p>这种灵活性让你能够在字符串中包含引号和撇号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;I told my friend, &quot;Python is my favorite language!&quot;&#x27;</span> </span><br><span class="line"><span class="string">&quot;The language &#x27;Python&#x27; is named after Monty Python, not the snake.&quot;</span> </span><br><span class="line"><span class="string">&quot;One of Python&#x27;s strengths is its diverse and supportive community.&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-3-1-使用方法修改字符串的大小写"><a href="#2-3-1-使用方法修改字符串的大小写" class="headerlink" title="2.3.1 使用方法修改字符串的大小写"></a>2.3.1 使用方法修改字符串的大小写</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;ada lovelace&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(name.title()) </span><br></pre></td></tr></table></figure>
+<p>将这个文件保存，再运行它。你将看到如下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ada Lovelace</span><br></pre></td></tr></table></figure>
+<p>小写的字符串”ada lovelace”存储到了变量name中。在print()语句中，方法title()出现在这个变量的后面。<strong>方法</strong>是Python可对数据执行的操作。在name.title()中，name后面的<strong>句点（.）</strong> 让Python对变量name执行方法title()指定的操作。每个方法后面都跟着一对括号，这是因为方法通常需要额外的信息来完成其工作。这种信息是在括号内提供的。函数title()不需要额外的信息，因此它后面的括号是空的。</p>
+<p>title()以首字母大写的方式显示每个单词，即将字符串中每个用空格间隔的单词以只有首字母大写的形式显示。</p>
+<p>还有其他几个很有用的大小写处理方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;Ada Lovelace&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(name.upper()) </span><br><span class="line"><span class="built_in">print</span>(name.lower()) </span><br></pre></td></tr></table></figure>
+<p>这些代码的输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADA LOVELACE </span><br><span class="line">ada lovelace </span><br></pre></td></tr></table></figure>
+<p>存储数据时，方法lower()很有用。很多时候，你无法依靠用户来提供正确的大小写，因此需要将字符串先转换为小写，再存储它们。以后需要显示这些信息时，再将其转换为最合适的大小写方式。</p>
+<h3 id="2-3-2-合并（拼接）字符串"><a href="#2-3-2-合并（拼接）字符串" class="headerlink" title="2.3.2 合并（拼接）字符串"></a>2.3.2 合并（拼接）字符串</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">first_name = <span class="string">&quot;ada&quot;</span> </span><br><span class="line">last_name = <span class="string">&quot;lovelace&quot;</span> </span><br><span class="line">full_name = first_name + <span class="string">&quot; &quot;</span> + last_name </span><br><span class="line"><span class="built_in">print</span>(full_name) </span><br></pre></td></tr></table></figure>
+<p>Python使用<strong>加号（+）</strong> 来合并字符串。在这个示例中，我们使用+来合并first_name、空格和last_name，以得到完整的姓名，其结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ada lovelace </span><br></pre></td></tr></table></figure>
+<p>这种合并字符串的方法称为拼接。通过拼接，可使用存储在变量中的信息来创建完整的消息。</p>
+<p>你可以使用拼接来创建消息，再把整条消息都存储在一个变量中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">first_name = <span class="string">&quot;ada&quot;</span> </span><br><span class="line">last_name = <span class="string">&quot;lovelace&quot;</span> </span><br><span class="line">full_name = first_name + <span class="string">&quot; &quot;</span> + last_name </span><br><span class="line">message = <span class="string">&quot;Hello, &quot;</span> + full_name.title() + <span class="string">&quot;!&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(message) </span><br></pre></td></tr></table></figure>
+<p>这些代码显示一条格式良好的简单问候语：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, Ada Lovelace! </span><br></pre></td></tr></table></figure>
+<h3 id="2-3-3-使用制表符或换行符来添加空白"><a href="#2-3-3-使用制表符或换行符来添加空白" class="headerlink" title="2.3.3 使用制表符或换行符来添加空白"></a>2.3.3 使用制表符或换行符来添加空白</h3><p>在编程中，空白泛指任何非打印字符，如空格、制表符和换行符。</p>
+<p>要在字符串中添加制表符，可使用字符组合 <strong>\t</strong>，如下述代码所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(<span class="string">&quot;Python&quot;</span>) </span><br><span class="line">Python </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(<span class="string">&quot;\tPython&quot;</span>) </span><br><span class="line">	Python</span><br></pre></td></tr></table></figure>
+<p>要在字符串中添加换行符，可使用字符组合 <strong>\n</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(<span class="string">&quot;Languages:\nPython\nC\nJavaScript&quot;</span>)</span><br><span class="line">Languages: </span><br><span class="line">Python </span><br><span class="line">C </span><br><span class="line">JavaScript</span><br></pre></td></tr></table></figure>
+<p>还可在同一个字符串中同时包含制表符和换行符。字符串”\n\t”让Python换到下一行，并在下一行开头添加一个制表符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(<span class="string">&quot;Languages:\n\tPython\n\tC\n\tJavaScript&quot;</span>) </span><br><span class="line">Languages: </span><br><span class="line">	Python </span><br><span class="line">	C </span><br><span class="line"> 	JavaScript </span><br></pre></td></tr></table></figure>
+<h3 id="2-3-4-删除空白"><a href="#2-3-4-删除空白" class="headerlink" title="2.3.4 删除空白"></a>2.3.4 删除空白</h3><p>空白很重要，因为你经常需要比较两个字符串是否相同。</p>
+<p>Python能够找出字符串开头和末尾多余的空白。要确保字符串末尾没有空白，可使用方法**rstrip()**。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language = <span class="string">&#x27;python &#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language </span><br><span class="line"><span class="string">&#x27;python &#x27;</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language.rstrip()</span><br><span class="line"><span class="string">&#x27;python&#x27;</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language</span><br><span class="line"><span class="string">&#x27;python &#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>对变量favorite_language调用方法rstrip()后，这个多余的空格被删除了。然而，这种删除只是暂时的，接下来再次询问favorite_language的值时，你会发现这个字符串与输入时一样，依然包含多余的空白。</p>
+<p>要永久删除这个字符串中的空白，必须将删除操作的结果存回到变量中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language = <span class="string">&#x27;python &#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language = favorite_language.rstrip()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language</span><br><span class="line"><span class="string">&#x27;python&#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>你还可以剔除字符串开头的空白，或同时剔除字符串两端的空白。为此，可分别使用方法<strong>lstrip()</strong> 和 **strip()**：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language = <span class="string">&#x27; python &#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language.rstrip()</span><br><span class="line"><span class="string">&#x27; python&#x27;</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language.lstrip()</span><br><span class="line"><span class="string">&#x27;python &#x27;</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>favorite_language.strip() </span><br><span class="line"><span class="string">&#x27;python&#x27;</span> </span><br></pre></td></tr></table></figure>
+<h3 id="2-3-5-使用字符串时避免语法错误"><a href="#2-3-5-使用字符串时避免语法错误" class="headerlink" title="2.3.5 使用字符串时避免语法错误"></a>2.3.5 使用字符串时避免语法错误</h3><p>程序中包含非法的Python代码时，就会导致语法错误。例如，在用单引号括起的字符串中，如果包含撇号，就将导致错误。这是因为这会导致Python将第一个单引号和撇号之间的内容视为一个字符串，进而将余下的文本视为Python代码，从而引发错误。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;One of Python&#x27;s strengths is its diverse community.&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(message) </span><br></pre></td></tr></table></figure>
+<p>撇号位于两个双引号之间，因此Python解释器能够正确地理解这个字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">One of Python&#x27;s strengths is its diverse community. </span><br></pre></td></tr></table></figure>
+
+<p>然而，如果你使用单引号，Python将无法正确地确定字符串的结束位置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&#x27;One of Python&#x27;</span>s strengths <span class="keyword">is</span> its diverse community.<span class="string">&#x27; </span></span><br><span class="line"><span class="string">print(message) </span></span><br></pre></td></tr></table></figure>
+
+<p>而你将看到如下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> File &quot;apostrophe.py&quot;, line 1 </span><br><span class="line"> message = &#x27;One of Python&#x27;s strengths is its diverse community.&#x27; </span><br><span class="line">SyntaxError: invalid syntax</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-6-Python-2-中的-print-语句"><a href="#2-3-6-Python-2-中的-print-语句" class="headerlink" title="2.3.6 Python 2 中的 print 语句"></a>2.3.6 Python 2 中的 print 语句</h3><p>在Python 2中，print语句的语法稍有不同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>python2<span class="number">.7</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> <span class="string">&quot;Hello Python 2.7 world!&quot;</span> </span><br><span class="line">Hello Python <span class="number">2.7</span> world! </span><br></pre></td></tr></table></figure>
+
+<p>在Python 2中，无需将要打印的内容放在括号内。从技术上说，Python 3中的print是一个函数，因此括号必不可少。有些Python 2 print语句也包含括号，但其行为与Python 3中稍有不同。简单地说，在Python 2代码中，有些print语句包含括号，有些不包含。</p>
+<hr>
+<h2 id="2-4-数字"><a href="#2-4-数字" class="headerlink" title="2.4 数字"></a>2.4 数字</h2><p>Python根据数字的用法以不同的方式处理它们。</p>
+<h3 id="2-4-1-整数"><a href="#2-4-1-整数" class="headerlink" title="2.4.1 整数"></a>2.4.1 整数</h3><p>在Python中，可对整数执行<strong>加（+）减（-）乘（*）除（/）</strong> 运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">2</span> + <span class="number">3</span></span><br><span class="line"><span class="number">5</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> - <span class="number">2</span></span><br><span class="line"><span class="number">1</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">2</span> * <span class="number">3</span></span><br><span class="line"><span class="number">6</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> / <span class="number">2</span></span><br><span class="line"><span class="number">1.5</span> </span><br></pre></td></tr></table></figure>
+<p>在终端会话中，Python直接返回运算结果。Python使用两个乘号表示乘方运算：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> ** <span class="number">2</span></span><br><span class="line"><span class="number">9</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> ** <span class="number">3</span></span><br><span class="line"><span class="number">27</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">10</span> ** <span class="number">6</span></span><br><span class="line"><span class="number">1000000</span></span><br></pre></td></tr></table></figure>
+<p>Python还支持运算次序，因此你可在同一个表达式中使用多种运算。你还可以使用括号来修改运算次序，让Python按你指定的次序执行运算，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">2</span> + <span class="number">3</span>*<span class="number">4</span></span><br><span class="line"><span class="number">14</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">2</span> + <span class="number">3</span>) * <span class="number">4</span></span><br><span class="line"><span class="number">20</span> </span><br></pre></td></tr></table></figure>
+<p>在这些示例中，空格不影响Python计算表达式的方式。</p>
+<h3 id="2-4-2-浮点数"><a href="#2-4-2-浮点数" class="headerlink" title="2.4.2 浮点数"></a>2.4.2 浮点数</h3><p>Python将带小数点的数字都称为浮点数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">0.1</span> + <span class="number">0.1</span></span><br><span class="line"><span class="number">0.2</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">0.2</span> + <span class="number">0.2</span></span><br><span class="line"><span class="number">0.4</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">2</span> * <span class="number">0.1</span></span><br><span class="line"><span class="number">0.2</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">2</span> * <span class="number">0.2</span></span><br><span class="line"><span class="number">0.4</span></span><br></pre></td></tr></table></figure>
+<p>但需要注意的是，结果包含的小数位数可能是不确定的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">0.2</span> + <span class="number">0.1</span></span><br><span class="line"><span class="number">0.30000000000000004</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> * <span class="number">0.1</span></span><br><span class="line"><span class="number">0.30000000000000004</span> </span><br></pre></td></tr></table></figure>
+<h3 id="2-4-3-使用函数-str-避免类型错误"><a href="#2-4-3-使用函数-str-避免类型错误" class="headerlink" title="2.4.3 使用函数 str()避免类型错误"></a>2.4.3 使用函数 str()避免类型错误</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">23</span> </span><br><span class="line">message = <span class="string">&quot;Happy &quot;</span> + age + <span class="string">&quot;rd Birthday!&quot;</span> </span><br><span class="line"><span class="built_in">print</span>(message) </span><br></pre></td></tr></table></figure>
+<p>如果你运行这些代码，将发现它们会引发错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last): </span><br><span class="line">File &quot;birthday.py&quot;, line 2, in &lt;module&gt; </span><br><span class="line">message = &quot;Happy &quot; + age + &quot;rd Birthday!&quot; </span><br><span class="line">TypeError: Can&#x27;t convert &#x27;int&#x27; object to str implicitly </span><br></pre></td></tr></table></figure>
+<p>这是一个<strong>类型错误</strong>，意味着Python无法识别你使用的信息。在这个示例中，Python发现你使用了一个值为整数（int）的变量，但它不知道该如何解读这个值。Python知道，这个变量表示的可能是数值23，也可能是字符2和3。像上面这样在字符串中使用整数时，需要显式地指出你希望Python将这个整数用作字符串。为此，可调用函数str()，它让Python将非字符串值表示为字符串：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">23</span> </span><br><span class="line">message = <span class="string">&quot;Happy &quot;</span> + <span class="built_in">str</span>(age) + <span class="string">&quot;rd Birthday!&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(message)</span><br></pre></td></tr></table></figure>
+<p>经过上述处理后，将显示你期望的消息，而不会引发错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Happy 23rd Birthday! </span><br></pre></td></tr></table></figure>
+<h3 id="2-4-4-Python-2-中的整数"><a href="#2-4-4-Python-2-中的整数" class="headerlink" title="2.4.4 Python 2 中的整数"></a>2.4.4 Python 2 中的整数</h3><p>在Python 2中，将两个整数相除得到的结果稍有不同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>python2<span class="number">.7</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> / <span class="number">2</span></span><br><span class="line"><span class="number">1</span> </span><br></pre></td></tr></table></figure>
+<p>Python返回的结果为1，而不是1.5。在Python 2中，整数除法的结果只包含整数部分，小数部分被删除。请注意，计算整数结果时，采取的方式不是四舍五入，而是将小数部分直接删除。</p>
+<p>在Python 2中，若要避免这种情况，务必确保至少有一个操作数为浮点数，这样结果也将为浮点数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> / <span class="number">2</span></span><br><span class="line"><span class="number">1</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3.0</span> / <span class="number">2</span></span><br><span class="line"><span class="number">1.5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span> / <span class="number">2.0</span></span><br><span class="line"><span class="number">1.5</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3.0</span> / <span class="number">2.0</span></span><br><span class="line"><span class="number">1.5</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="2-5-注释"><a href="#2-5-注释" class="headerlink" title="2.5 注释"></a>2.5 注释</h2><p>注释让你能够使用自然语言在程序中添加说明。</p>
+<h3 id="2-5-1-如何编写注释"><a href="#2-5-1-如何编写注释" class="headerlink" title="2.5.1 如何编写注释"></a>2.5.1 如何编写注释</h3><p>在Python中，注释用井号（#）标识。井号后面的内容都会被Python解释器忽略，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向大家问好</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello Python people!&quot;</span>) </span><br></pre></td></tr></table></figure>
+<p>Python解释器将忽略第1行，只执行第2行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python people!</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-2-该编写什么样的注释"><a href="#2-5-2-该编写什么样的注释" class="headerlink" title="2.5.2 该编写什么样的注释"></a>2.5.2 该编写什么样的注释</h3><p>编写注释的主要目的是阐述代码要做什么，以及是如何做的。</p>
+<hr>
+<h2 id="2-6-Python-之禅"><a href="#2-6-Python-之禅" class="headerlink" title="2.6 Python 之禅"></a>2.6 Python 之禅</h2><p>Python社区的理念都包含在Tim Peters撰写的<br>“Python之禅”中。要获悉这些有关编写优秀Python代码的指导原则，只需在解释器中执行命令<br>import this。这里不打算赘述整个“Python之禅”，而只与大家分享其中的几条原则，让你明白<br>为何它们对Python新手来说至关重要。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> this</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The Zen of Python, by Tim Peters </span><br><span class="line"></span><br><span class="line">Beautiful is better than ugly. </span><br></pre></td></tr></table></figure>
+
+<p>Python程序员笃信代码可以编写得漂亮而优雅。编程是要解决问题的，设计良好、高效而漂亮的解决方案都会让程序员心生敬意。随着你对Python的认识越来越深入，并使用它来编写越来越多的代码，有一天也许会有人站在你后面惊呼：“哇，代码编写得真是漂亮！”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Simple is better than complex. </span><br></pre></td></tr></table></figure>
+
+<p>如果有两个解决方案，一个简单，一个复杂，但都行之有效，就选择简单的解决方案吧。这样，你编写的代码将更容易维护，你或他人以后改进这些代码时也会更容易。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Complex is better than complicated. </span><br></pre></td></tr></table></figure>
+<p>现实是复杂的，有时候可能没有简单的解决方案。在这种情况下，就选择最简单可行的解决方案吧。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Readability counts. </span><br></pre></td></tr></table></figure>
+<p>即便是复杂的代码，也要让它易于理解。开发的项目涉及复杂代码时，一定要为这些代码编写有益的注释。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">There should be one-- and preferably only one --obvious way to do it. </span><br></pre></td></tr></table></figure>
+<p>如果让两名Python程序员去解决同一个问题，他们提供的解决方案应大致相同。这并不是说编程没有创意空间，而是恰恰相反！然而，大部分编程工作都是使用常见解决方案来解决简单的小问题，但这些小问题都包含在更庞大、更有创意空间的项目中。在你的程序中，各种具体细节对其他Python程序员来说都应易于理解。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Now is better than never. </span><br></pre></td></tr></table></figure>
+<p>你可以将余生都用来学习Python和编程的纷繁难懂之处，但这样你什么项目都完不成。不要企图编写完美无缺的代码；先编写行之有效的代码，再决定是对其做进一步改进，还是转而去编写新代码。</p>
+<hr>
+<h2 id="2-7-小结"><a href="#2-7-小结" class="headerlink" title="2.7 小结"></a>2.7 小结</h2><p>在本章中，你学习了：如何使用变量；如何创建描述性变量名以及如何消除名称错误和语法错误；字符串是什么，以及如何使用小写、大写和首字母大写方式显示字符串；使用空白来显示整洁的输出，以及如何剔除字符串中多余的空白；如何使用整数和浮点数；使用数值数据时需要注意的意外行为。你还学习了如何编写说明性注释，让代码对你和其他人来说更容易理解。最后，你了解了让代码尽可能简单的理念。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC2%E7%AB%A0%20%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">http://example.com/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC2%E7%AB%A0%20%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC3%E7%AB%A0%20%E5%88%97%E8%A1%A8%E7%AE%80%E4%BB%8B/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">《Python编程:从入门到实践》学习笔记_第3章 列表简介</div></div></a></div><div class="next-post pull-right"><a href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC1%E7%AB%A0%20%E8%B5%B7%E6%AD%A5/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《Python编程：从入门到实践》学习笔记_第1章 起步</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">第2章 变量和简单数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E8%BF%90%E8%A1%8C-hello-world-py-%E6%97%B6%E5%8F%91%E7%94%9F%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.1.</span> <span class="toc-text">2.1 运行 hello_world.py 时发生的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2.2 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E5%8F%98%E9%87%8F%E7%9A%84%E5%91%BD%E5%90%8D%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.2.1 变量的命名和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E6%97%B6%E9%81%BF%E5%85%8D%E5%91%BD%E5%90%8D%E9%94%99%E8%AF%AF"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2.2 使用变量时避免命名错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.</span> <span class="toc-text">2.3 字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.3.1 使用方法修改字符串的大小写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E5%90%88%E5%B9%B6%EF%BC%88%E6%8B%BC%E6%8E%A5%EF%BC%89%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.3.2 合并（拼接）字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-3-%E4%BD%BF%E7%94%A8%E5%88%B6%E8%A1%A8%E7%AC%A6%E6%88%96%E6%8D%A2%E8%A1%8C%E7%AC%A6%E6%9D%A5%E6%B7%BB%E5%8A%A0%E7%A9%BA%E7%99%BD"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3.3 使用制表符或换行符来添加空白</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-4-%E5%88%A0%E9%99%A4%E7%A9%BA%E7%99%BD"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.3.4 删除空白</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-5-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%97%B6%E9%81%BF%E5%85%8D%E8%AF%AD%E6%B3%95%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.5.</span> <span class="toc-text">2.3.5 使用字符串时避免语法错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-6-Python-2-%E4%B8%AD%E7%9A%84-print-%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.3.6.</span> <span class="toc-text">2.3.6 Python 2 中的 print 语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E6%95%B0%E5%AD%97"><span class="toc-number">1.4.</span> <span class="toc-text">2.4 数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-1-%E6%95%B4%E6%95%B0"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.4.1 整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-2-%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.4.2 浮点数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-3-%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0-str-%E9%81%BF%E5%85%8D%E7%B1%BB%E5%9E%8B%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.3.</span> <span class="toc-text">2.4.3 使用函数 str()避免类型错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-4-Python-2-%E4%B8%AD%E7%9A%84%E6%95%B4%E6%95%B0"><span class="toc-number">1.4.4.</span> <span class="toc-text">2.4.4 Python 2 中的整数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E6%B3%A8%E9%87%8A"><span class="toc-number">1.5.</span> <span class="toc-text">2.5 注释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-1-%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E6%B3%A8%E9%87%8A"><span class="toc-number">1.5.1.</span> <span class="toc-text">2.5.1 如何编写注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-2-%E8%AF%A5%E7%BC%96%E5%86%99%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%B3%A8%E9%87%8A"><span class="toc-number">1.5.2.</span> <span class="toc-text">2.5.2 该编写什么样的注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6-Python-%E4%B9%8B%E7%A6%85"><span class="toc-number">1.6.</span> <span class="toc-text">2.6 Python 之禅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-7-%E5%B0%8F%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">2.7 小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/17/%5BSubstrate%20Recipes%E7%BF%BB%E8%AF%91%5D1.21%20Tightly-%20and%20Loosely-Coupled%20Pallets/" title="&lt;Substrate Recipes翻译&gt;1.21 Tightly- and Loosely-Coupled Pallets"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="&lt;Substrate Recipes翻译&gt;1.21 Tightly- and Loosely-Coupled Pallets"/></a><div class="content"><a class="title" href="/2021/11/17/%5BSubstrate%20Recipes%E7%BF%BB%E8%AF%91%5D1.21%20Tightly-%20and%20Loosely-Coupled%20Pallets/" title="&lt;Substrate Recipes翻译&gt;1.21 Tightly- and Loosely-Coupled Pallets">&lt;Substrate Recipes翻译&gt;1.21 Tightly- and Loosely-Coupled Pallets</a><time datetime="2021-11-17T12:46:48.000Z" title="Created 2021-11-17 20:46:48">2021-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/17/%E3%80%8ARust%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E5%BE%85%E6%9B%B4%E6%96%B0/" title="《Rust权威指南》学习笔记_待更新"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Rust权威指南》学习笔记_待更新"/></a><div class="content"><a class="title" href="/2021/11/17/%E3%80%8ARust%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E5%BE%85%E6%9B%B4%E6%96%B0/" title="《Rust权威指南》学习笔记_待更新">《Rust权威指南》学习笔记_待更新</a><time datetime="2021-11-17T12:40:53.000Z" title="Created 2021-11-17 20:40:53">2021-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC11%E7%AB%A0%20%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81/" title="《Python编程：从入门到实践》学习笔记_第11章 测试代码"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Python编程：从入门到实践》学习笔记_第11章 测试代码"/></a><div class="content"><a class="title" href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC11%E7%AB%A0%20%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81/" title="《Python编程：从入门到实践》学习笔记_第11章 测试代码">《Python编程：从入门到实践》学习笔记_第11章 测试代码</a><time datetime="2021-11-17T12:39:44.000Z" title="Created 2021-11-17 20:39:44">2021-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC10%E7%AB%A0%20%E6%96%87%E4%BB%B6%E5%92%8C%E5%BC%82%E5%B8%B8/" title="《Python编程：从入门到实践》学习笔记_第10章 文件和异常"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Python编程：从入门到实践》学习笔记_第10章 文件和异常"/></a><div class="content"><a class="title" href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC10%E7%AB%A0%20%E6%96%87%E4%BB%B6%E5%92%8C%E5%BC%82%E5%B8%B8/" title="《Python编程：从入门到实践》学习笔记_第10章 文件和异常">《Python编程：从入门到实践》学习笔记_第10章 文件和异常</a><time datetime="2021-11-17T12:39:05.000Z" title="Created 2021-11-17 20:39:05">2021-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC9%E7%AB%A0%20%E7%B1%BB/" title="《Python编程：从入门到实践》学习笔记_第9章 类"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Python编程：从入门到实践》学习笔记_第9章 类"/></a><div class="content"><a class="title" href="/2021/11/17/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC9%E7%AB%A0%20%E7%B1%BB/" title="《Python编程：从入门到实践》学习笔记_第9章 类">《Python编程：从入门到实践》学习笔记_第9章 类</a><time datetime="2021-11-17T12:38:28.000Z" title="Created 2021-11-17 20:38:28">2021-11-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
