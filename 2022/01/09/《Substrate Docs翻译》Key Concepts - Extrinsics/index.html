@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Substrate Docs翻译》Key Concepts - Extrinsics | 天了噜Rex的杂物堆</title><meta name="keywords" content="Substrate"><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="外在的（Extrinsics）extrinsic是来自链外并包含在块中的一条信息。Extrinsics分为三类：固有交易、签名交易和未签名交易。  请注意，[事件](Events | Substrate_)不是外在的。 链为链本身固有的信息片段发出事件。 例如，质押奖励是事件，而不是外在的，因为奖励是由链逻辑的内在环境触发的。  区块结构（Block structure）Substrate 中的区">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Substrate Docs翻译》Key Concepts - Extrinsics">
+<meta property="og:url" content="http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Extrinsics/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="外在的（Extrinsics）extrinsic是来自链外并包含在块中的一条信息。Extrinsics分为三类：固有交易、签名交易和未签名交易。  请注意，[事件](Events | Substrate_)不是外在的。 链为链本身固有的信息片段发出事件。 例如，质押奖励是事件，而不是外在的，因为奖励是由链逻辑的内在环境触发的。  区块结构（Block structure）Substrate 中的区">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-09T03:35:14.000Z">
+<meta property="article:modified_time" content="2022-01-09T11:10:16.227Z">
+<meta property="article:author" content="天了噜Rex">
+<meta property="article:tag" content="Substrate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Extrinsics/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Substrate Docs翻译》Key Concepts - Extrinsics',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-09 19:10:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">38</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《Substrate Docs翻译》Key Concepts - Extrinsics</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-01-09T03:35:14.000Z" title="Created 2022-01-09 11:35:14">2022-01-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-01-09T11:10:16.227Z" title="Updated 2022-01-09 19:10:16">2022-01-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《Substrate Docs翻译》Key Concepts - Extrinsics"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="外在的（Extrinsics）"><a href="#外在的（Extrinsics）" class="headerlink" title="外在的（Extrinsics）"></a>外在的（Extrinsics）</h1><p>extrinsic是来自链外并包含在块中的一条信息。Extrinsics分为三类：固有交易、签名交易和未签名交易。 </p>
+<p>请注意，[事件](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/events-and-errors/">Events | Substrate_</a>)不是外在的。 链为链本身固有的信息片段发出事件。 例如，质押奖励是事件，而不是外在的，因为奖励是由链逻辑的内在环境触发的。 </p>
+<h2 id="区块结构（Block-structure）"><a href="#区块结构（Block-structure）" class="headerlink" title="区块结构（Block structure）"></a>区块结构（Block structure）</h2><p>Substrate 中的区块由区块头和外部数组组成。区块头包含块高度、父哈希、外部根、状态根和摘要。 本节将只关注外部根。 </p>
+<p>外在元素被捆绑到一个区块中，作为一系列在运行时中定义的要执行的区块。 外部根是本系列的密码摘要。 这有两个目的。 首先，它可以防止在构建和分发区块头之后对一系列外部参数进行任何更改。 其次，它提供了一种方法，允许轻客户端简洁地验证任何给定的外部数据确实存在于一个只知道区块头的区块中。 </p>
+<ul>
+<li>[Block Reference](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_runtime/traits/trait.Block.html">Block in sp_runtime::traits - Rust (substrate.io)</a>)</li>
+</ul>
+<h2 id="内在的（Inherents）"><a href="#内在的（Inherents）" class="headerlink" title="内在的（Inherents）"></a>内在的（Inherents）</h2><p>Inherents是未签名的信息片段，仅由区块作者插入到块中。 它们不会在网络上传播或存储在交易队列中。 从技术上讲，没有什么可以阻止传播inherents的 Substrate 链，但不会有基于费用的垃圾邮件预防机制。 </p>
+<p>Inherents表示以一种自以为是的方式描述许多有效信息之一的数据。 仅仅因为足够多的验证者已经同意它们是合理的，它们就被认为是“真实的”。 </p>
+<p>例如，区块的作者可能会在区块中插入一个inherent时间戳。没有办法证明时间戳是真实的，就像通过签名证明发送资金的目的一样。 相反，验证者根据其他验证者对该时间戳的合理程度来接受或拒绝该块，这可能意味着它在他们自己的系统时钟的某个可接受范围内。 </p>
+<ul>
+<li>[Inherents Reference](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_inherents/index.html">sp_inherents - Rust (substrate.io)</a>)</li>
+</ul>
+<h2 id="已签名交易（Signed-transactions）"><a href="#已签名交易（Signed-transactions）" class="headerlink" title="已签名交易（Signed transactions）"></a>已签名交易（Signed transactions）</h2><p>签名交易包含发出交易的账户的签名，并且需要支付费用才能将交易包含在链上。 因为可以在执行之前识别在链上包含签名交易的价值，所以它们可以在节点之间的网络上传播，垃圾邮件的风险很低。 </p>
+<p>签名交易符合以太坊或比特币交易的概念。 </p>
+<h2 id="未签名的交易（Unsigned-transactions）"><a href="#未签名的交易（Unsigned-transactions）" class="headerlink" title="未签名的交易（Unsigned transactions）"></a>未签名的交易（Unsigned transactions）</h2><p>有些情况需要未签名的交易。 谨慎使用未签名的交易，因为它们的验证逻辑可能很困难。 </p>
+<p>由于交易未签名，因此没有人支付费用。正因为如此，交易队列缺乏防止垃圾邮件的经济逻辑。未签名的交易也缺乏随机数，使得重放保护变得困难。 一些交易需要使用未签名的变体，但它们需要某种形式的基于[签名扩展](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/concepts/tx-pool/#signed-extensions">Transaction Pool | Substrate_</a>)的自定义实现的垃圾邮件预防，这可以存在于未签名的交易中。 </p>
+<p>Substrate 中未签名交易的一个示例是权威发送的[I’m Online](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/frame/#im-online">FRAME | Substrate_</a>)心跳交易（heartbeat transaction）。该交易包括来自会话密钥的签名，该密钥不控制资金，因此无法支付费用。 交易池通过检查是否已经在会话中提交了心跳来控制垃圾邮件。 </p>
+<h2 id="进一步阅读（Further-reading）"><a href="#进一步阅读（Further-reading）" class="headerlink" title="进一步阅读（Further reading）"></a>进一步阅读（Further reading）</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_runtime/traits/trait.Extrinsic.html">Reference Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/concepts/execution/">Runtime Execution</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/weights-and-fees/">Transaction Fees</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/concepts/tx-pool/">Transaction Pool</a></li>
+</ul>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Extrinsics/">http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Extrinsics/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Substrate/">Substrate</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Account%20Abstractions/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">《Substrate Docs翻译》Key Concepts - Account Abstractions</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Runtime/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《Substrate Docs翻译》Key Concepts - Runtime</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BGetting%20Started%20-%20Architecture/" title="《Substrate Docs翻译》Getting Started - Architecture"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs翻译》Getting Started - Architecture</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BGetting%20Started%20-%20Getting%20Started%20on%20Windows/" title="《Substrate Docs翻译》Getting Started - Getting Started on Windows"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs翻译》Getting Started - Getting Started on Windows</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BGetting%20Started%20-%20Glossary/" title="《Substrate Docs翻译》Getting Started - Glossary"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs翻译》Getting Started - Glossary</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BGetting%20Started%20-%20Installation/" title="《Substrate Docs翻译》Getting Started - Installation"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs翻译》Getting Started - Installation</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BGetting%20Started%20-%20Welcome/" title="《Substrate Docs翻译》Getting Started - Welcome"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs翻译》Getting Started - Welcome</div></div></a></div><div><a href="/2022/01/05/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BAdvanced%20-%20Account%20Info/" title="《Substrate Docs翻译》Advanced - Account Info"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-05</div><div class="title">《Substrate Docs翻译》Advanced - Account Info</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">38</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">某王姓男子的杂物堆（个人博客），欢迎各位来访orz！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E5%9C%A8%E7%9A%84%EF%BC%88Extrinsics%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">外在的（Extrinsics）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E7%BB%93%E6%9E%84%EF%BC%88Block-structure%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">区块结构（Block structure）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%9C%A8%E7%9A%84%EF%BC%88Inherents%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">内在的（Inherents）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B2%E7%AD%BE%E5%90%8D%E4%BA%A4%E6%98%93%EF%BC%88Signed-transactions%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">已签名交易（Signed transactions）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E7%AD%BE%E5%90%8D%E7%9A%84%E4%BA%A4%E6%98%93%EF%BC%88Unsigned-transactions%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">未签名的交易（Unsigned transactions）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E9%98%85%E8%AF%BB%EF%BC%88Further-reading%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">进一步阅读（Further reading）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/15/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Off-Chain%20Features/" title="《Substrate Docs翻译》Key Concepts - Off-Chain Features"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs翻译》Key Concepts - Off-Chain Features"/></a><div class="content"><a class="title" href="/2022/01/15/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Off-Chain%20Features/" title="《Substrate Docs翻译》Key Concepts - Off-Chain Features">《Substrate Docs翻译》Key Concepts - Off-Chain Features</a><time datetime="2022-01-14T16:27:33.000Z" title="Created 2022-01-15 00:27:33">2022-01-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/15/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Execution/" title="《Substrate Docs翻译》Key Concepts - Execution"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs翻译》Key Concepts - Execution"/></a><div class="content"><a class="title" href="/2022/01/15/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Execution/" title="《Substrate Docs翻译》Key Concepts - Execution">《Substrate Docs翻译》Key Concepts - Execution</a><time datetime="2022-01-14T16:13:19.000Z" title="Created 2022-01-15 00:13:19">2022-01-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/11/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Transaction%20Weight/" title="《Substrate Docs翻译》Key Concepts - Transaction Weight"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs翻译》Key Concepts - Transaction Weight"/></a><div class="content"><a class="title" href="/2022/01/11/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Transaction%20Weight/" title="《Substrate Docs翻译》Key Concepts - Transaction Weight">《Substrate Docs翻译》Key Concepts - Transaction Weight</a><time datetime="2022-01-10T19:07:16.000Z" title="Created 2022-01-11 03:07:16">2022-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/11/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Session%20Keys/" title="《Substrate Docs翻译》Key Concepts - Session Keys"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs翻译》Key Concepts - Session Keys"/></a><div class="content"><a class="title" href="/2022/01/11/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Session%20Keys/" title="《Substrate Docs翻译》Key Concepts - Session Keys">《Substrate Docs翻译》Key Concepts - Session Keys</a><time datetime="2022-01-10T18:14:35.000Z" title="Created 2022-01-11 02:14:35">2022-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Transaction%20Pool/" title="《Substrate Docs翻译》Key Concepts - Transaction Pool"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs翻译》Key Concepts - Transaction Pool"/></a><div class="content"><a class="title" href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E7%BF%BB%E8%AF%91%E3%80%8BKey%20Concepts%20-%20Transaction%20Pool/" title="《Substrate Docs翻译》Key Concepts - Transaction Pool">《Substrate Docs翻译》Key Concepts - Transaction Pool</a><time datetime="2022-01-09T11:54:17.000Z" title="Created 2022-01-09 19:54:17">2022-01-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
