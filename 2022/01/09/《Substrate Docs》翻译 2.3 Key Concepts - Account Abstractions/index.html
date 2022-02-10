@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Substrate Docs》翻译 2.3 Key Concepts - Account Abstractions | 天了噜Rex的杂物堆</title><meta name="keywords" content="翻译"><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="帐户抽象 （Account Abstractions）Substrate 使用多组公钥&#x2F;私钥对来代表网络的参与者，包括验证者、提名者和普通用户。  例如，Substrate 节点使用提名权益证明 (NPoS) 算法来选择验证者。 验证者和提名者可能持有大量资金，因此 Substrate 的 Staking pallet引入了帐户抽象，以帮助确保资金尽可能安全。  这些抽象是：   Stash密钥（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Substrate Docs》翻译 2.3 Key Concepts - Account Abstractions">
+<meta property="og:url" content="http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Key%20Concepts%20-%20Account%20Abstractions/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="帐户抽象 （Account Abstractions）Substrate 使用多组公钥&#x2F;私钥对来代表网络的参与者，包括验证者、提名者和普通用户。  例如，Substrate 节点使用提名权益证明 (NPoS) 算法来选择验证者。 验证者和提名者可能持有大量资金，因此 Substrate 的 Staking pallet引入了帐户抽象，以帮助确保资金尽可能安全。  这些抽象是：   Stash密钥（">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-09T10:45:30.000Z">
+<meta property="article:modified_time" content="2022-01-16T11:35:48.113Z">
+<meta property="article:author" content="天了噜Rex">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Key%20Concepts%20-%20Account%20Abstractions/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Substrate Docs》翻译 2.3 Key Concepts - Account Abstractions',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-16 19:35:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《Substrate Docs》翻译 2.3 Key Concepts - Account Abstractions</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-01-09T10:45:30.000Z" title="Created 2022-01-09 18:45:30">2022-01-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-01-16T11:35:48.113Z" title="Updated 2022-01-16 19:35:48">2022-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E3%80%8ASubstrate-Docs%E3%80%8B%E7%BF%BB%E8%AF%91/">《Substrate Docs》翻译</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《Substrate Docs》翻译 2.3 Key Concepts - Account Abstractions"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="帐户抽象-（Account-Abstractions）"><a href="#帐户抽象-（Account-Abstractions）" class="headerlink" title="帐户抽象 （Account Abstractions）"></a>帐户抽象 （Account Abstractions）</h1><p>Substrate 使用多组公钥/私钥对来代表网络的参与者，包括验证者、提名者和普通用户。 </p>
+<p>例如，Substrate 节点使用提名权益证明 (NPoS) 算法来选择验证者。 验证者和提名者可能持有大量资金，因此 Substrate 的 Staking pallet引入了帐户抽象，以帮助确保资金尽可能安全。 </p>
+<p>这些抽象是： </p>
+<ul>
+<li><strong>Stash密钥（Stash Key）</strong>：一个 Stash 账户用于持有大量资金。 它的私钥在冷钱包中应该尽可能安全。 </li>
+<li><strong>控制器密钥（Controller Key）</strong>：控制器帐户代表 Stash 帐户发出选择信号，例如支付偏好，但应该只持有最少量的资金来支付交易费用。 它的私钥应该是安全的，因为它会影响验证器设置，但会定期用于验证器维护。 </li>
+<li><strong>会话密钥（Session Key）</strong>：这些是保存在验证器客户端中的“热”密钥，用于签署某些验证器操作。 他们不应该持有资金。 </li>
+</ul>
+<blockquote>
+<p><strong>深入学习（Further Learning）</strong></p>
+<p>在 Substrate 的 NPoS <a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/pallet_staking/index.html">Staking pallet</a>的上下文中了解有关验证者和提名者的更多信息。 </p>
+</blockquote>
+<h2 id="账号密钥（Account-keys）"><a href="#账号密钥（Account-keys）" class="headerlink" title="账号密钥（Account keys）"></a>账号密钥（Account keys）</h2><p>密钥对可以代表一个账户并控制资金，就像您期望从其他区块链获得的普通账户一样。在Substrate的<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/pallet_balances/index.html">Balances pallet</a>的上下文中，这些帐户必须有一个最低金额（“现有存款”）才能存在于存储中。 </p>
+<p>帐户密钥是通用定义的，并在运行时具体化。 </p>
+<p>继续我们的Stash和Controller帐户示例，这些帐户的密钥是根据它们的预期用途来区分的，而不是任何潜在的加密差异。创建Stash或Controller密钥时，还支持普通帐户密钥支持的所有加密。</p>
+<h3 id="Stash密钥（Stash-keys）"><a href="#Stash密钥（Stash-keys）" class="headerlink" title="Stash密钥（Stash keys）"></a>Stash密钥（Stash keys）</h3><p>Stash密钥是定义Stash帐户的公钥/私钥对。这个账户就像一个“储蓄账户”，你不应该从它进行频繁的交易。 因此，它的私钥应该以最高的安全性来对待，例如在保险箱或硬件安全层中进行保护。 </p>
+<p>由于 Stash 密钥保持离线状态，因此它指定一个Controller帐户以根据 Stash帐户资金的权重做出非支出决策。它还可以指定一个代理帐户代表它在治理中投票。 </p>
+<h3 id="控制器密钥（Controller-keys）"><a href="#控制器密钥（Controller-keys）" class="headerlink" title="控制器密钥（Controller keys）"></a>控制器密钥（Controller keys）</h3><p>控制器密钥是定义控制器帐户的公钥/私钥对。在 Substrate 的 NPoS 模型的上下文中，Controller 密钥将表明一个人验证或提名的意图。</p>
+<p>控制器密钥用于设置奖励目的地等偏好，对于验证者，用于设置其会话密钥。 控制器账户只需要支付交易费用，因此只需要最少的资金。</p>
+<p>控制器密钥永远不能用于从其Stash帐户中花费资金。但是，控制者采取的行动可能会导致削减（slashing），因此它仍然应该得到很好的保护。</p>
+<h2 id="下一步（Next-steps）"><a href="#下一步（Next-steps）" class="headerlink" title="下一步（Next steps）"></a>下一步（Next steps）</h2><h3 id="深入学习（Learn-more）"><a href="#深入学习（Learn-more）" class="headerlink" title="深入学习（Learn more）"></a>深入学习（Learn more）</h3><ul>
+<li>在[本文](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/concepts/session-keys/">Session Keys | Substrate_</a>)中了解有关会话密钥的更多信息。</li>
+<li>了解[Substrate 中使用的密码学](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/advanced/cryptography/">Cryptography | Substrate_</a>)。 </li>
+</ul>
+<h3 id="示例（Examples）"><a href="#示例（Examples）" class="headerlink" title="示例（Examples）"></a>示例（Examples）</h3><ul>
+<li>按照我们的教程[创建本地网络并生成密钥](<a target="_blank" rel="noopener" href="https://docs.substrate.io/tutorials/v3/private-network/">Start a private network | Substrate_</a>)。 </li>
+</ul>
+<h3 id="参考（References）"><a href="#参考（References）" class="headerlink" title="参考（References）"></a>参考（References）</h3><ul>
+<li><p>访问会话[密钥运行时 API](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_session/trait.SessionKeys.html">SessionKeys in sp_session - Rust (substrate.io)</a>)的参考文档。 </p>
+</li>
+<li><p>查看[Substrate 节点运行时中的默认会话密钥](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/node_runtime/struct.SessionKeys.html">SessionKeys in node_runtime - Rust (substrate.io)</a>)。 </p>
+</li>
+</ul>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Key%20Concepts%20-%20Account%20Abstractions/">http://example.com/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Key%20Concepts%20-%20Account%20Abstractions/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.4%20Key%20Concepts%20-%20Transaction%20Pool/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">《Substrate Docs》翻译 2.4 Key Concepts - Transaction Pool</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.2%20Key%20Concepts%20-%20Extrinsics/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《Substrate Docs》翻译 2.2 Key Concepts - Extrinsics</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.1%20Getting%20Started%20-%20Welcome/" title="《Substrate Docs》翻译 1.1 Getting Started - Welcome"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.1 Getting Started - Welcome</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.2%20Getting%20Started%20-%20Architecture/" title="《Substrate Docs》翻译 1.2 Getting Started - Architecture"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.2 Getting Started - Architecture</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.3%20Getting%20Started%20-%20Installation/" title="《Substrate Docs》翻译 1.3 Getting Started - Installation"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.3 Getting Started - Installation</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.4%20Getting%20Started%20-%20Getting%20Started%20on%20Windows/" title="《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.5%20Getting%20Started%20-%20Glossary/" title="《Substrate Docs》翻译 1.5 Getting Started - Glossary"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.5 Getting Started - Glossary</div></div></a></div><div><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.1%20Key%20Concepts%20-%20Runtime/" title="《Substrate Docs》 2.1 翻译 Key Concepts - Runtime"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-09</div><div class="title">《Substrate Docs》 2.1 翻译 Key Concepts - Runtime</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">某王姓男子的杂物堆（个人博客），欢迎各位来访orz！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%90%E6%88%B7%E6%8A%BD%E8%B1%A1-%EF%BC%88Account-Abstractions%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">帐户抽象 （Account Abstractions）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A6%E5%8F%B7%E5%AF%86%E9%92%A5%EF%BC%88Account-keys%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">账号密钥（Account keys）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stash%E5%AF%86%E9%92%A5%EF%BC%88Stash-keys%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">Stash密钥（Stash keys）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E5%AF%86%E9%92%A5%EF%BC%88Controller-keys%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">控制器密钥（Controller keys）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%88Next-steps%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">下一步（Next steps）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%88Learn-more%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">深入学习（Learn more）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%88Examples%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">示例（Examples）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%88References%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">参考（References）</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.4 Runtime Development - Storage"/></a><div class="content"><a class="title" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage">《Substrate Docs》翻译 3.4 Runtime Development - Storage</a><time datetime="2022-01-26T17:43:01.000Z" title="Created 2022-01-27 01:43:01">2022-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata">《Substrate Docs》翻译 3.3 Runtime Development - Metadata</a><time datetime="2022-01-25T07:26:01.000Z" title="Created 2022-01-25 15:26:01">2022-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/" title="《Substrate Docs》翻译 3.11 Runtime Development - Randomness"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.11 Runtime Development - Randomness"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/" title="《Substrate Docs》翻译 3.11 Runtime Development - Randomness">《Substrate Docs》翻译 3.11 Runtime Development - Randomness</a><time datetime="2022-01-25T04:42:06.000Z" title="Created 2022-01-25 12:42:06">2022-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/" title="《Substrate Docs》翻译 3.2 Runtime Development - Macros"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.2 Runtime Development - Macros"/></a><div class="content"><a class="title" href="/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/" title="《Substrate Docs》翻译 3.2 Runtime Development - Macros">《Substrate Docs》翻译 3.2 Runtime Development - Macros</a><time datetime="2022-01-23T15:47:38.000Z" title="Created 2022-01-23 23:47:38">2022-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/" title="《Substrate Docs》翻译 3.1 Runtime Development - FRAME"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.1 Runtime Development - FRAME"/></a><div class="content"><a class="title" href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/" title="《Substrate Docs》翻译 3.1 Runtime Development - FRAME">《Substrate Docs》翻译 3.1 Runtime Development - FRAME</a><time datetime="2022-01-20T17:11:43.000Z" title="Created 2022-01-21 01:11:43">2022-01-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

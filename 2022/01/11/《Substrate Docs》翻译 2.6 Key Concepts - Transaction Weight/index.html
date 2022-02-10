@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Substrate Docs》翻译 2.6 Key Concepts - Transaction Weight | 天了噜Rex的杂物堆</title><meta name="keywords" content="翻译"><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="交易权重（Transaction Weight）链可用的资源是有限的。 这些资源包括内存使用、存储 I&#x2F;O、计算、事务&#x2F;块大小和状态数据库大小。 Substrate 提供了几种机制来管理对资源的访问，并防止链的各个组件消耗过多的任何资源。 权重是用于管理验证块所需时间的机制。 一般来说，这来自于限制存储 I&#x2F;O 和计算。   笔记（Note） 权重不用于限制对其他资源的访问，例如存储本身或内存占用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Substrate Docs》翻译 2.6 Key Concepts - Transaction Weight">
+<meta property="og:url" content="http://example.com/2022/01/11/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.6%20Key%20Concepts%20-%20Transaction%20Weight/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="交易权重（Transaction Weight）链可用的资源是有限的。 这些资源包括内存使用、存储 I&#x2F;O、计算、事务&#x2F;块大小和状态数据库大小。 Substrate 提供了几种机制来管理对资源的访问，并防止链的各个组件消耗过多的任何资源。 权重是用于管理验证块所需时间的机制。 一般来说，这来自于限制存储 I&#x2F;O 和计算。   笔记（Note） 权重不用于限制对其他资源的访问，例如存储本身或内存占用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-10T19:07:16.000Z">
+<meta property="article:modified_time" content="2022-01-16T11:36:18.252Z">
+<meta property="article:author" content="天了噜Rex">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/11/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.6%20Key%20Concepts%20-%20Transaction%20Weight/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Substrate Docs》翻译 2.6 Key Concepts - Transaction Weight',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-16 19:36:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《Substrate Docs》翻译 2.6 Key Concepts - Transaction Weight</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-01-10T19:07:16.000Z" title="Created 2022-01-11 03:07:16">2022-01-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-01-16T11:36:18.252Z" title="Updated 2022-01-16 19:36:18">2022-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E3%80%8ASubstrate-Docs%E3%80%8B%E7%BF%BB%E8%AF%91/">《Substrate Docs》翻译</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《Substrate Docs》翻译 2.6 Key Concepts - Transaction Weight"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="交易权重（Transaction-Weight）"><a href="#交易权重（Transaction-Weight）" class="headerlink" title="交易权重（Transaction Weight）"></a>交易权重（Transaction Weight）</h1><p>链可用的资源是有限的。 这些资源包括内存使用、存储 I/O、计算、事务/块大小和状态数据库大小。 Substrate 提供了几种机制来管理对资源的访问，并防止链的各个组件消耗过多的任何资源。 权重是用于管理验证块所需时间的机制。 一般来说，这来自于限制存储 I/O 和计算。 </p>
+<blockquote>
+<p><strong>笔记（Note）</strong></p>
+<p>权重不用于限制对其他资源的访问，例如存储本身或内存占用。 为此必须使用其他机制。 </p>
+</blockquote>
+<p>块可能包含的权重数量是有限的，可选的权重消耗（即不需要作为块的初始化或最终确定阶段的一部分部署，也不需要用于强制性固有外部的权重）通常会通过经济措施来限制 - 或 简单来说，通过交易费用。 权重系统的费用影响包含在[交易费用文件](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/weights-and-fees/">Weights and Fees | Substrate_</a>)中。 </p>
+<p>在固定参考硬件（Intel Core i7-7700K CPU，64GB RAM 和 NVMe SSD）上，Substrate 将一个重量单位定义为 1 皮秒的执行时间，即 10^12^ 权重 = 1 秒，或 1,000 重量 = 1 纳秒。 </p>
+<p>参考硬件的基准测试使权重在运行时之间具有可比性，这允许来自不同来源的软件组件的可组合性。 为了针对不同的验证器硬件假设调整运行时，您可以设置不同的最大块权重。 例如，为了让验证者参与的速度只有参考机器的一半，最大块权重应该是默认值的一半，保持默认的块时间。 </p>
+<p>最大区块权重应该相当于目标区块时间的三分之一，分配三分之一用于区块构建，三分之一用于网络传播，三分之一用于导入和验证。 将块时间加倍将允许最大块权重加倍。 这些调优选项为运行时开发人员提供了一种方法，可以针对他们的用例在每秒事务与硬件需求之间进行最佳权衡。 这些权衡可以通过运行时更新进行调整，以跟上硬件和软件的改进。 </p>
+<h2 id="权重基础（Weight-fundamentals）"><a href="#权重基础（Weight-fundamentals）" class="headerlink" title="权重基础（Weight fundamentals）"></a>权重基础（Weight fundamentals）</h2><p>权重代表你的区块链必须验证一个块的有限时间。 这包括计算周期和存储 I/O。 自定义实现可以使用复杂的结构来表达这一点。 Substrate权重只是一个[数值](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/weights/type.Weight.html">Weight in frame_support::weights - Rust (substrate.io)</a>)。 </p>
+<p>权重计算应始终： </p>
+<ul>
+<li><strong>在调度之前</strong>可计算。 区块生产者应该能够在实际决定接受与否之前检查可调度的权重。 </li>
+<li>本身消耗很少的资源。 消耗计算事务权重的类似资源与执行它所花费的类似资源是没有意义的。 因此，权重计算应该比调度轻得多。 </li>
+<li>无需咨询链上状态即可确定使用的资源。 权重擅长表示固定测量或仅基于可调度函数的参数的测量，其中没有昂贵的 I </li>
+</ul>
+<p>在可调度的权重严重依赖于链状态的情况下，有两种选择： </p>
+<ul>
+<li>确定或引入一个可调度的重量可能承受的强制上限。 如果强制的上限与可调度的最小可能重量之间的差异很小，那么可以假设它始终处于重量的上限而无需咨询状态。 然而，如果差异太大，那么进行较少交易的经济成本可能会太大，这将扭曲激励并导致吞吐量效率低下。 </li>
+<li>要求将有效权重（或可用于有效计算它的前体）作为参数传递给调度。 收取的重量应基于这些参数，但也包括在发货期间验证它们所需的时间。 必须进行验证以确保称重参数与链上状态准确对应，如果不正确，则操作应正常出错。 </li>
+</ul>
+<h3 id="权重因素（Weight-factors）"><a href="#权重因素（Weight-factors）" class="headerlink" title="权重因素（Weight factors）"></a>权重因素（Weight factors）</h3><p>有几个因素会影响执行时间，从而影响权重计算。 一个重要的因素是由可分派执行的数据库访问次数。 因为数据库访问的成本在很大程度上取决于数据库后端和存储硬件，所以权重计算是参数化的，而不是数据库读取和写入的权重成本。 这些成本是通过在一些参考硬件上对每个可用的数据库后端进行基准测试来确定的。 这允许在不更改所有权重计算的情况下切换数据库后端。 </p>
+<p>除了仅使用常量进行预调度权重计算外，开发人员还可以考虑给定可调度的输入参数。 当执行时间取决于例如一个参数的长度时，这可能很有用。 重要的是，这些计算本身并不需要任何有意义的工作。 调度前的最大权重应该可以通过一些基本算法从输入参数中轻松计算出来。 </p>
+<p>[System pallet](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/pallet/index.html">frame_system::pallet - Rust (substrate.io)</a>)负责在执行时累积每个块的重量，并确保它不超过限制。 [Transaction Payment pallet](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/pallet_transaction_payment/index.html">pallet_transaction_payment - Rust (substrate.io)</a>)负责解释这些权重并据此扣除费用。 称重功能是运行时的一部分，因此可以根据需要进行升级。 </p>
+<h2 id="发货后重量修正（Post-dispatch-weight-correction）"><a href="#发货后重量修正（Post-dispatch-weight-correction）" class="headerlink" title="发货后重量修正（Post dispatch weight correction）"></a>发货后重量修正（Post dispatch weight correction）</h2><p>在某些情况下，可调度的实际权重无法从其输入中轻松计算出来。 例如，权重可能取决于可调度的逻辑路径。 如果没有任何方法在发货后更正重量，我们会不断地高估这些可发货的货物并随后对这些货物多收费，因为我们必须在发货前假设最坏的情况，以确保链条安全。 </p>
+<p>调度后重量校正允许任何可调度在执行后返回其实际重量。 该重量必须小于或等于发货前的最坏情况重量。 对于允许包含外在的用户，他们仍然必须能够支付最大重量，即使最终付款将基于实际重量。 </p>
+<h2 id="区块权重和长度限制（Block-weight-and-length-limit）"><a href="#区块权重和长度限制（Block-weight-and-length-limit）" class="headerlink" title="区块权重和长度限制（Block weight and length limit）"></a>区块权重和长度限制（Block weight and length limit）</h2><p>除了影响费用之外，权重系统的主要目的是防止一个块被需要太长时间才能执行的交易填充。 在处理块内的事务时，系统托盘会累积块的总长度（以字节为单位的编码事务的总和）和块的总权重。 如果这些数字中的任何一个超过限制，则该块中不接受进一步的交易。 这些限制在[<code>MaximumBlockLength</code>](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/limits/struct.BlockLength.html">BlockLength in frame_system::limits - Rust (substrate.io)</a>)和[<code>MaximumBlockWeight</code>](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/limits/struct.BlockWeights.html">BlockWeights in frame_system::limits - Rust (substrate.io)</a>)中定义。 </p>
+<p>关于这些限制的一个重要说明是，其中一部分是为<code>Operational</code>调度类保留的。 此规则适用于这两个限制，并且可以在[<code>AvailableBlockRatio</code>](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/limits/struct.BlockLength.html#method.max_with_normal_ratio">BlockLength in frame_system::limits - Rust (substrate.io)</a>) 中找到比率。 </p>
+<p>例如，如果块长度限制为 1 兆字节并且比率设置为 80%，则所有事务可以填充块的前 800 千字节，而后 200 字节只能由操作类填充。 </p>
+<p>还有一个<code>Mandatory</code>调度类可用于确保外部始终包含在块中，无论其对块权重的影响如何。 请参阅有关交易费用的文章以了解有关不同调度类以及何时使用它们的更多信息。 </p>
+<h3 id="深入学习（Learn-more）"><a href="#深入学习（Learn-more）" class="headerlink" title="深入学习（Learn more）"></a>深入学习（Learn more）</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/paritytech/substrate/tree/master/frame/examples/basic">Example</a> pallet.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/paritytech/substrate/blob/master/frame/transaction-payment/src/lib.rs">Transaction Payment pallet</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/paritytech/substrate/blob/master/frame/support/src/weights.rs">Weights</a></li>
+</ul>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/11/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.6%20Key%20Concepts%20-%20Transaction%20Weight/">http://example.com/2022/01/11/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.6%20Key%20Concepts%20-%20Transaction%20Weight/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/15/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.7%20Key%20Concepts%20-%20Execution/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">《Substrate Docs》翻译 2.7 Key Concepts - Execution</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/11/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.5%20Key%20Concepts%20-%20Session%20Keys/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《Substrate Docs》翻译 2.5 Key Concepts - Session Keys</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.1%20Getting%20Started%20-%20Welcome/" title="《Substrate Docs》翻译 1.1 Getting Started - Welcome"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.1 Getting Started - Welcome</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.2%20Getting%20Started%20-%20Architecture/" title="《Substrate Docs》翻译 1.2 Getting Started - Architecture"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.2 Getting Started - Architecture</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.3%20Getting%20Started%20-%20Installation/" title="《Substrate Docs》翻译 1.3 Getting Started - Installation"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.3 Getting Started - Installation</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.4%20Getting%20Started%20-%20Getting%20Started%20on%20Windows/" title="《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.5%20Getting%20Started%20-%20Glossary/" title="《Substrate Docs》翻译 1.5 Getting Started - Glossary"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.5 Getting Started - Glossary</div></div></a></div><div><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.1%20Key%20Concepts%20-%20Runtime/" title="《Substrate Docs》 2.1 翻译 Key Concepts - Runtime"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-09</div><div class="title">《Substrate Docs》 2.1 翻译 Key Concepts - Runtime</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">某王姓男子的杂物堆（个人博客），欢迎各位来访orz！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%A4%E6%98%93%E6%9D%83%E9%87%8D%EF%BC%88Transaction-Weight%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">交易权重（Transaction Weight）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E5%9F%BA%E7%A1%80%EF%BC%88Weight-fundamentals%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">权重基础（Weight fundamentals）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E5%9B%A0%E7%B4%A0%EF%BC%88Weight-factors%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">权重因素（Weight factors）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E8%B4%A7%E5%90%8E%E9%87%8D%E9%87%8F%E4%BF%AE%E6%AD%A3%EF%BC%88Post-dispatch-weight-correction%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">发货后重量修正（Post dispatch weight correction）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E6%9D%83%E9%87%8D%E5%92%8C%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%EF%BC%88Block-weight-and-length-limit%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">区块权重和长度限制（Block weight and length limit）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%EF%BC%88Learn-more%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">深入学习（Learn more）</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.4 Runtime Development - Storage"/></a><div class="content"><a class="title" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage">《Substrate Docs》翻译 3.4 Runtime Development - Storage</a><time datetime="2022-01-26T17:43:01.000Z" title="Created 2022-01-27 01:43:01">2022-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata">《Substrate Docs》翻译 3.3 Runtime Development - Metadata</a><time datetime="2022-01-25T07:26:01.000Z" title="Created 2022-01-25 15:26:01">2022-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/" title="《Substrate Docs》翻译 3.11 Runtime Development - Randomness"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.11 Runtime Development - Randomness"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/" title="《Substrate Docs》翻译 3.11 Runtime Development - Randomness">《Substrate Docs》翻译 3.11 Runtime Development - Randomness</a><time datetime="2022-01-25T04:42:06.000Z" title="Created 2022-01-25 12:42:06">2022-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/" title="《Substrate Docs》翻译 3.2 Runtime Development - Macros"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.2 Runtime Development - Macros"/></a><div class="content"><a class="title" href="/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/" title="《Substrate Docs》翻译 3.2 Runtime Development - Macros">《Substrate Docs》翻译 3.2 Runtime Development - Macros</a><time datetime="2022-01-23T15:47:38.000Z" title="Created 2022-01-23 23:47:38">2022-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/" title="《Substrate Docs》翻译 3.1 Runtime Development - FRAME"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.1 Runtime Development - FRAME"/></a><div class="content"><a class="title" href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/" title="《Substrate Docs》翻译 3.1 Runtime Development - FRAME">《Substrate Docs》翻译 3.1 Runtime Development - FRAME</a><time datetime="2022-01-20T17:11:43.000Z" title="Created 2022-01-21 01:11:43">2022-01-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

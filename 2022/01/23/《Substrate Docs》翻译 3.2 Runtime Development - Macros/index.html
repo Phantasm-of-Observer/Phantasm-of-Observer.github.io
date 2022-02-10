@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Substrate Docs》翻译 3.2 Runtime Development - Macros | 天了噜Rex的杂物堆</title><meta name="keywords" content="翻译"><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="宏（Macros） 自 2021 年 1 月起，基于 FRAME 的托盘已升级其对宏的使用。 请参阅[本指南](pallet in frame_support - Rust (substrate.io))以了解有关将 v1 托盘迁移到 v2 和此资源以了解有关 FRAME 版本更改的更多信息。   Substrate 使用[Rust 宏](Macros - The Rust Programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Substrate Docs》翻译 3.2 Runtime Development - Macros">
+<meta property="og:url" content="http://example.com/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="宏（Macros） 自 2021 年 1 月起，基于 FRAME 的托盘已升级其对宏的使用。 请参阅[本指南](pallet in frame_support - Rust (substrate.io))以了解有关将 v1 托盘迁移到 v2 和此资源以了解有关 FRAME 版本更改的更多信息。   Substrate 使用[Rust 宏](Macros - The Rust Programming">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-23T15:47:38.000Z">
+<meta property="article:modified_time" content="2022-01-24T17:07:31.144Z">
+<meta property="article:author" content="天了噜Rex">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Substrate Docs》翻译 3.2 Runtime Development - Macros',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-25 01:07:31'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《Substrate Docs》翻译 3.2 Runtime Development - Macros</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-01-23T15:47:38.000Z" title="Created 2022-01-23 23:47:38">2022-01-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-01-24T17:07:31.144Z" title="Updated 2022-01-25 01:07:31">2022-01-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E3%80%8ASubstrate-Docs%E3%80%8B%E7%BF%BB%E8%AF%91/">《Substrate Docs》翻译</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《Substrate Docs》翻译 3.2 Runtime Development - Macros"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="宏（Macros）"><a href="#宏（Macros）" class="headerlink" title="宏（Macros）"></a>宏（Macros）</h1><blockquote>
+<p>自 2021 年 1 月起，基于 FRAME 的托盘已升级其对宏的使用。 请参阅[本指南](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#upgrade-guidelines">pallet in frame_support - Rust (substrate.io)</a>)以了解有关将 v1 托盘迁移到 v2 和<a target="_blank" rel="noopener" href="https://hackmd.io/@fscJ0GEvRb2rqALLZB1kfA/SkSerkamt">此资源</a>以了解有关 FRAME 版本更改的更多信息。 </p>
+</blockquote>
+<p>Substrate 使用[Rust 宏](<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html">Macros - The Rust Programming Language (rust-lang.org)</a>)来聚合从为运行时实现的托盘派生的逻辑。 这些运行时宏允许开发人员专注于运行时逻辑，而不是编码和解码链上变量或编写大量代码块来实现基本的[区块链基础功能](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/concepts/runtime/#core-primitives">Runtime | Substrate_</a>)。 这减轻了区块链开发工作的大量繁重工作，并消除了复制代码的需要。 </p>
+<p>本文的目的是对 Rust 宏进行基本概述，并解释运行时工程师最常使用的 Substrate 宏。 </p>
+<h2 id="宏基础（Macro-basics）"><a href="#宏基础（Macro-basics）" class="headerlink" title="宏基础（Macro basics）"></a>宏基础（Macro basics）</h2><p>简而言之，宏是编写代码的代码行。 它们提供了将事物抽象出来的能力，而无需显式声明复杂的数据结构。 Rust 中有四种宏： </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming">声明性宏</a>（使用最广泛）</li>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html#how-to-write-a-custom-derive-macro">自定义派生</a>（一种程序宏）</li>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html#attribute-like-macros">类属性宏</a>（一种程序宏）</li>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html#function-like-macros">类函数宏</a>（一种程序宏）</li>
+</ul>
+<p>大多数 Substrate 运行时宏是使用<strong>声明性宏</strong>或<strong>类函数宏</strong>定义的，最近在 FRAME v2 托盘中采用了<strong>类属性宏</strong>。 </p>
+<blockquote>
+<p><strong>了解有关 Substrate 运行时宏的更多提示</strong> </p>
+<ul>
+<li>阅读有关 FRAME 中常用宏的<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/index.html#macros">文档</a>。 </li>
+<li>使用<a target="_blank" rel="noopener" href="https://github.com/dtolnay/cargo-expand"><code>cargo expand</code></a>查看宏的扩展代码并了解幕后发生的事情。 </li>
+<li>阅读更多<a target="_blank" rel="noopener" href="https://danielkeep.github.io/tlborm/book/pim-README.html">关于表达式模式匹配的宏规则</a>。 </li>
+</ul>
+</blockquote>
+<h2 id="Substrate运行时宏"><a href="#Substrate运行时宏" class="headerlink" title="Substrate运行时宏"></a>Substrate运行时宏</h2><p>以下部分是对运行时工程师最常遇到的宏的全面解释。 鼓励想要了解实现细节的开发人员点击“文档和注释”小节中的链接，以更好地了解每个宏的扩展方式。 </p>
+<p>Substrate Primitives 和 FRAME 都依赖于各种类型的宏的集合。 以下部分将更详细地介绍每个部分。 下面是 Substrate 宏的概述： </p>
+<p><strong>FRAME <a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/frame/#support-library">支持库</a>中的宏:</strong></p>
+<ul>
+<li>在<code>frame_support</code>:<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/index.html#macros">function-like</a> 宏</li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/index.html#derives">derive</a> 宏</li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/index.html#attributes">attribute</a> 宏</li>
+</ul>
+</li>
+</ul>
+<p><strong>Substrate <a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/frame/#system-library">系统库</a>中的宏:</strong></p>
+<ul>
+<li>在<code>sp_core</code>:<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_core/index.html#macros">function-like macros</a>宏</li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_core/index.html#derives">derive <code>RuntimeDebug</code></a>宏</li>
+</ul>
+</li>
+<li>在<code>sp_runtime</code>:<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_runtime/index.html#macros">function-like</a>宏</li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_runtime/index.html#derives">derive</a>宏</li>
+</ul>
+</li>
+<li>在<code>serde</code>: <a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_runtime/index.html#derives">function-like</a>宏</li>
+<li>在<code>sp_api</code>: <a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_api/index.html#macros">function-like</a>宏</li>
+<li>在<code>sp_std</code>: <a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_std/index.html#macros">function-like</a>宏</li>
+<li>在<code>sp_version</code>: <a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_version/index.html#macros">function-like</a>宏</li>
+</ul>
+<blockquote>
+<p><strong>笔记</strong></p>
+<p>请参阅[节点模板运行时](<a target="_blank" rel="noopener" href="https://github.com/substrate-developer-hub/substrate-node-template/blob/main/runtime/Cargo.toml#L21">substrate-node-template/Cargo.toml at main · substrate-developer-hub/substrate-node-template (github.com)</a>)的 Cargo.toml 文件中的#Substrate 依赖项，以查看它们的使用位置。 </p>
+</blockquote>
+<h2 id="FRAME-宏和属性（FRAME-macros-and-attributes）"><a href="#FRAME-宏和属性（FRAME-macros-and-attributes）" class="headerlink" title="FRAME 宏和属性（FRAME macros and attributes）"></a>FRAME 宏和属性（FRAME macros and attributes）</h2><p>本节涵盖了 FRAME 附带的所有不同的宏。 请参阅[托盘的结构](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/frame/#pallets">FRAME | Substrate_</a>)以了解Substrate托盘的组成。 </p>
+<h3 id="frame-support-pallet"><a href="#frame-support-pallet" class="headerlink" title="#[frame_support::pallet]"></a>#[frame_support::pallet]</h3><p><strong>何时使用</strong></p>
+<p>需要声明由一组类型、函数和特征实现组成的托盘，稍后将由<code>construct_runtime</code>聚合以构建到运行时。 </p>
+<p><strong>能做什么</strong></p>
+<p>这是允许在construct_runtime! 中使用托盘的[属性宏](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html">pallet in frame_support - Rust (substrate.io)</a>)。 该宏由各种属性组成，这些属性将用于识别托盘所需的特定物品。 </p>
+<p>与派生宏类似，此宏仅通过读取输入来扩展类型和特征实现，并且几乎从不触及其输入。 此宏修改其输入的唯一例外（与派生宏相反）是： </p>
+<ul>
+<li><strong>当泛型替换为类型时。</strong> 例如，在<code>pallet::pallet</code>中，<code>pub struct Pallet&lt;..&gt;(_)</code>中项目的内部类型被<code>PhantomData</code>替换，而在<code>pallet::storage</code>中，第一个通用<code>_</code>被替换为实现<code>StorageInstance</code>特征的类型. </li>
+<li><strong>某些项目已更改。</strong> 例如，当<code>pallet::type_value</code>将函数项更改为结构和特征实现时。 </li>
+<li><strong>当用户没有提供一些文档时，会添加一些文档。</strong> 例如，如果没有提供文档，宏<code>pallet::pallet</code>将修改输入以在项目<code>struct Pallet&lt;T&gt;(_);</code>上方添加文档。 </li>
+</ul>
+<h3 id="pallet-config"><a href="#pallet-config" class="headerlink" title="#[pallet::config]"></a>#[pallet::config]</h3><p><strong>何时使用</strong></p>
+<p>需要定义托盘的泛型。 </p>
+<p><strong>能做什么</strong></p>
+<p>提供作为[<code>Config</code> trait](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/pallet/trait.Config.html">Config in frame_system::pallet - Rust (substrate.io)</a>)的一部分的常量，并提供有关用于运行时的外部工具的信息。 </p>
+<p><strong>文档</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#config-trait-palletconfig-mandatory">Config trait</a></li>
+</ul>
+<h3 id="pallet-constant"><a href="#pallet-constant" class="headerlink" title="#[pallet::constant]"></a>#[pallet::constant]</h3><p><strong>何时使用</strong></p>
+<p>将关联类型的值传递给元数据，从而允许外部工具和第三方使用该类型的值。 请注意，此属性只能在<code>#[pallet::config]</code>项目中使用。 </p>
+<p><strong>能做什么</strong></p>
+<p>为<code>Config</code> trait 提供运行时所需的类型和属性，并生成关联的元数据。 </p>
+<p>添加<code>#[pallet::constant]</code>属性将导致宏添加到常量元数据，包括：常量的名称、相关类型的名称、常数的值以及 <code>Get::get()</code>返回的值。 </p>
+<p>例如，我们可以使用<code>#[pallet::constant] </code>将<code>type MyGetParam</code>放入元数据中： </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::config]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Config</span></span>: frame_system::Config &#123;</span><br><span class="line">    <span class="meta">#[pallet::constant]</span> <span class="comment">// puts attributes in metadata</span></span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">MyGetParam</span></span>: Get&lt;<span class="built_in">u32</span>&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅在<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#config-trait-palletconfig-mandatory">#[pallet::config]</a>上下文中的使用。</li>
+</ul>
+<h3 id="pallet-extra-constants"><a href="#pallet-extra-constants" class="headerlink" title="#[pallet::extra_constants]"></a>#[pallet::extra_constants]</h3><p><strong>何时使用</strong></p>
+<p>可选地，对于其他常量，可能需要传递给元数据。 </p>
+<p><strong>能做什么</strong></p>
+<p>它允许定义一些额外的常量来放入元数据。 例如，您可以声明一个返回值的函数，该值将生成到元数据中： </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::extra_constants]</span></span><br><span class="line"><span class="keyword">impl</span>&lt;T: Config&gt; Pallet&lt;T&gt; &#123;</span><br><span class="line">  <span class="comment">//Example function using extra_constants</span></span><br><span class="line">  <span class="function"><span class="keyword">fn</span> <span class="title">example_extra_constants</span></span>() -&gt; <span class="built_in">u128</span> &#123; <span class="number">4u128</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>文档</strong></p>
+<ul>
+<li>参阅 <a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#extra-constants-palletextra_constants-optional">documentation</a></li>
+</ul>
+<h3 id="pallet-pallet"><a href="#pallet-pallet" class="headerlink" title="#[pallet::pallet]"></a>#[pallet::pallet]</h3><p><strong>何时使用</strong></p>
+<p>需要声明托盘结构占位符，稍后由<code>construct_runtime</code>使用。 </p>
+<p><strong>能做什么</strong></p>
+<p>如果提供了属性，则生成<code>Store</code> trait，其中包含每个存储项的关联类型。 它采用更明确的 Rust 结构模块的形式，可以写成<code>pub struct Pallet&lt;T&gt;(_);</code>，用适当的<code>PhantomData</code>替换<code>_</code>使其通用。 </p>
+<p>这是其定义的示例： </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::pallet]</span></span><br><span class="line"><span class="meta">#[pallet::generate_store(pub(super) trait Store)]</span></span><br><span class="line"><span class="meta">#[pallet::generate_storage_info]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Pallet</span></span>&lt;T&gt;(_);</span><br></pre></td></tr></table></figure>
+
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅添加到 struct Pallet<T> 定义中的[宏扩展](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#macro-expansion-1">pallet in frame_support - Rust (substrate.io)</a>) </li>
+</ul>
+<h3 id="pallet-generate-storage-info"><a href="#pallet-generate-storage-info" class="headerlink" title="#[pallet::generate_storage_info]"></a>#[pallet::generate_storage_info]</h3><p><strong>何时使用</strong></p>
+<p>强烈鼓励，但可选，这将有助于确保您的所有托盘存储项都是有界的。 </p>
+<p><strong>能做什么</strong></p>
+<p>这需要所有存储实现trait <code>traits::StorageInfoTrait</code>，因此所有键和值类型必须绑定<code>pallet_prelude::MaxEncodedLen</code>。 一些单独的存储可以通过使用<code>#[pallet::unbounded]</code> 选择退出此约束，请参阅<code>#[pallet::storage]</code> 文档。 </p>
+<p>这是其定义的一个示例： </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::pallet]</span></span><br><span class="line"><span class="meta">#[pallet::generate_store(pub(super) trait Store)]</span></span><br><span class="line"><span class="meta">#[pallet::generate_storage_info]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Pallet</span></span>&lt;T&gt;(_);</span><br></pre></td></tr></table></figure>
+
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅添加到 struct Pallet<T> 定义中的[宏扩展](<a target="_blank" rel="noopener" href="https://paritytech.github.io/substrate/master/frame_support/attr.pallet.html#pallet-struct-placeholder-palletpallet-mandatory">pallet in frame_support - Rust (paritytech.github.io)</a>) </li>
+</ul>
+<h3 id="pallet-hooks"><a href="#pallet-hooks" class="headerlink" title="#[pallet::hooks]"></a>#[pallet::hooks]</h3><p> <strong>何时使用</strong></p>
+<p>用于声明托盘挂钩。 </p>
+<p><strong>能做什么</strong></p>
+<p>使用 <code>Hooks</code> trait可以使用[<code>Hooks</code>](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/traits/trait.Hooks.html#provided-methods">Hooks in frame_support::traits - Rust (substrate.io)</a>)。 </p>
+<p>例如： </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::hooks]</span></span><br><span class="line"><span class="keyword">impl</span>&lt;T: Config&gt; Hooks&lt;BlockNumberFor&lt;T&gt;&gt; <span class="keyword">for</span> Pallet&lt;T&gt; &#123;</span><br><span class="line">  <span class="comment">// Hooks functions and logic goes here.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#hooks-pallethooks-mandatory">documentation</a></li>
+<li>请参阅<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#macro-expansion-2">macro expansion</a></li>
+</ul>
+<h3 id="pallet-call"><a href="#pallet-call" class="headerlink" title="#[pallet::call]"></a>#[pallet::call]</h3><p><strong>何时使用</strong></p>
+<p>必需，以实现托盘的可调度。 每个可调度必须： </p>
+<ul>
+<li>使用 <code>#[pallet::weight($expr)]</code> 属性定义权重</li>
+<li>将其第一个参数作为原点：<code>OriginFor&lt;T&gt;</code></li>
+<li>使用 <code>#[pallet::compact]</code> 对参数使用紧凑编码</li>
+<li>返回 <code>DispatchResultWithPostInfo</code> 或 <code>DispatchResult</code> </li>
+</ul>
+<p><strong>能做什么</strong></p>
+<p>[Extrinsics](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/concepts/extrinsics/">Extrinsics | Substrate_</a>)可以使用调用来触发特定的逻辑。 调用也可以用于链上治理，民主托盘可以对调用进行投票。 #[pallet::call] 允许创建可调度函数，这些函数将从 impl 代码块生成相关项目。 换句话说，它使用 <a href="/rustdocs/latest/frame_system/pallet/enum.Call.html">Call enum</a> 聚合所有可调度逻辑，它将所有可调度调用聚合到单个运行时调用中。 </p>
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#call-palletcall-mandatory">documentation</a></li>
+</ul>
+<h3 id="pallet-error"><a href="#pallet-error" class="headerlink" title="#[pallet::error]"></a>#[pallet::error]</h3><p><strong>何时使用</strong></p>
+<p>（可选）定义要在可调度项中使用的错误类型。 </p>
+<p><strong>能做什么</strong></p>
+<p>将错误变体文档放入元数据中。 </p>
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#error-palleterror-optional">documentation</a></li>
+</ul>
+<h3 id="pallet-event"><a href="#pallet-event" class="headerlink" title="#[pallet::event]"></a>#[pallet::event]</h3><p><strong>何时使用</strong></p>
+<p>（可选）定义托盘的事件类型。 </p>
+<p><strong>能做什么</strong></p>
+<p>它类似于错误，但它可以保存更多信息。 它们生成事件的元数据和 add_derive。 它使用<code>#[pallet::metadata(..)]</code>属性来定义要从事件中放置哪些元数据。 </p>
+<p>例如： </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::event]</span></span><br><span class="line"><span class="meta">#[pallet::metadata(u32 = <span class="meta-string">&quot;SpecialU32&quot;</span>)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">enum</span> <span class="title">Event</span></span>&lt;T: Config&gt; &#123;</span><br><span class="line">    Proposed(<span class="built_in">u32</span>, T::AccountId),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#event-palletevent-optional">documentation</a></li>
+</ul>
+<h3 id="pallet-storage"><a href="#pallet-storage" class="headerlink" title="#[pallet::storage]"></a>#[pallet::storage]</h3><p><strong>何时使用</strong></p>
+<p>可选，因为它可以多次使用。 </p>
+<p><strong>能做什么</strong></p>
+<p>在运行时存储中定义一些抽象存储。 </p>
+<p><code>[pallet::storage]</code>使用类似 Rust 的 HashMap 进行存储，除了它需要一个 Key、Value、Hasher、Prefix、QueryKind 和一个 OnEmpty 参数。 前缀 generic 定义存储将存储其 <code>(key, value)</code>对（即 trie）的位置，并定义托盘和存储前缀，如下所示： </p>
+<p><code>concat(twox_128(pallet_prefix), towx_128(storage_prefix))</code>，将<code>_</code>替换为生成的托盘和存储名称的前缀实现。 </p>
+<p><strong>文档</strong></p>
+<ul>
+<li>请参阅<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#storage-palletstorage-optional">macro documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/pallet_prelude/struct.StorageMap.html#implementations"><code>StorageMap</code> implementation</a></li>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch08-03-hash-maps.html">Rust HashMap syntax</a></li>
+</ul>
+<h3 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h3><p>其他 FRAME 宏属性包括： </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#genesis-config-palletgenesis_config-optional">#[pallet::genesis_config]</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#type-value-pallettype_value-optional">#[pallet::type_value]</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#genesis-build-palletgenesis_build-optional">#[pallet::genesis_build]</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#inherent-palletinherent-optional">#[pallet::inherent]</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#validate-unsigned-palletvalidate_unsigned-optional">#[pallet::validate_unsigned]</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#origin-palletorigin-optional">#[pallet::origin]</a></li>
+</ul>
+<h2 id="额外的-FRAME-宏"><a href="#额外的-FRAME-宏" class="headerlink" title="额外的 FRAME 宏"></a>额外的 FRAME 宏</h2><h3 id="construct-runtime"><a href="#construct-runtime" class="headerlink" title="construct_runtime!"></a>construct_runtime!</h3><p><strong>何时使用</strong></p>
+<p>构建 Substrate 运行时并将各种托盘集成到运行时中。 </p>
+<p><strong>能做什么</strong></p>
+<p>该宏声明并实现了各种结构和枚举，例如<code>Runtime</code>、<code>Event</code>、<code>Origin</code>、<code>Call</code>、<code>GenesisConfig</code>等，并为这些结构类型实现了各种帮助特征。 该宏还添加了将不同事件和可调度调用从总体运行时映射回特定托盘的逻辑。 </p>
+<p><strong>文档和注释</strong> </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/macro.construct_runtime.html">API Documentation</a></li>
+<li><code>Runtime</code>结构类型被定义为表示 Substrate 运行时。</li>
+<li><code>Event</code>枚举类型由所有发出事件的托盘的变体定义，并为枚举实现了辅助特征和编码/解码特征。各种转换trait <code>Event</code>还实现了<code>TryInto&lt;pallets::Event&lt;Runtime&gt;&gt;</code> 特征以从枚举类型中提取事件。 </li>
+<li><code>Origin</code>枚举类型是用辅助特征定义的，例如<code>PartialEq</code>、<code>Clone</code>、<code>Debug</code>已实现。此枚举类型定义谁调用外部：<code>NONE</code>、<code>ROOT</code>或由特定帐户签名。这三个原始原点由 FRAME 系统模块定义，但可选的 FRAME 托盘也可以定义原点。 </li>
+<li><code>Call</code>枚举类型定义为所有集成托盘作为变体。它包含每个集成托盘的数据和元数据，并通过实现 <code>frame_support::traits::UnfilteredDispatchable</code> trait 将调用重定向到特定托盘。 </li>
+<li><code>GenesisConfig</code>结构类型已定义并实现 <code>sp_runtime::BuildStorage</code> 特征以构建存储创世配置。 </li>
+<li>该宏采用每个托盘的<code>frame_support::unsigned::ValidateUnsigned</code> trait实现。如果在任何包含的托盘中没有实现 <code>ValidateUnsigned</code> trait，则所有未签名的交易都将被拒绝。 </li>
+</ul>
+<h3 id="parameter-types"><a href="#parameter-types" class="headerlink" title="parameter_types!"></a>parameter_types!</h3><p><strong>何时使用</strong></p>
+<p>在运行时构造期间声明要分配给托盘可配置特征关联类型的参数类型。 </p>
+<p><strong>能做什么</strong></p>
+<p>该宏将每个指定为结构类型的参数替换为返回其指定值的 <code>get()</code>函数。 每个参数结构类型还实现了一个 <code>frame_support::traits::Get&lt;I&gt;</code> trait，以将类型转换为其指定值。 </p>
+<p><strong>文档</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/macro.parameter_types.html">API Documentation</a></li>
+</ul>
+<h2 id="Substrate系统库宏"><a href="#Substrate系统库宏" class="headerlink" title="Substrate系统库宏"></a>Substrate系统库宏</h2><h3 id="impl-runtime-apis"><a href="#impl-runtime-apis" class="headerlink" title="impl_runtime_apis"></a>impl_runtime_apis</h3><p><strong>何时使用</strong></p>
+<p>该宏通过<code>RuntimeApi</code>和<code>RuntimeApiImpl</code>结构类型为客户端生成 API 实现。 </p>
+<p> <strong>能做什么</strong></p>
+<p>该宏定义了暴露给 Substrate 节点客户端的<code>RuntimeApi</code>和<code> RuntimeApiImpl</code>。 它基于 RuntimeApiImpl 中的设置和附加的用户指定实现提供<code>RuntimeApiImpl</code>的实现细节。 </p>
+<p><strong>文档和注释</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_api/macro.impl_runtime_apis.html">API Documentation</a></li>
+<li>声明了<code>RuntimeApi</code> 和<code>RuntimeApiImpl</code>结构。 该宏还为 <code>RuntimeApiImpl</code>实现了各种辅助trait。</li>
+<li>开发人员在 <code>impl_runtime_apis</code> 中定义的内容！ 宏被附加到 <code>RuntimeApiImpl</code> 实现的末尾。 </li>
+<li>为了公开有关运行时的版本信息，定义了一个常量 <code>RUNTIME_API_VERSIONS</code>。 包含运行时核心 <code>ID</code>/<code>VERSION</code>、元数据 <code>ID</code>/<code>VERSION</code>、SessionKeys <code>ID</code>/<code>VERSION</code> 等。 </li>
+<li>公共模块 <code>api</code> 定义了一个 <code>dispatch()</code> 函数，实现了决定各种字符串如何映射到元数据或链生命周期调用。 </li>
+</ul>
+<h3 id="app-crypto"><a href="#app-crypto" class="headerlink" title="app_crypto!"></a>app_crypto!</h3><p><strong>何时使用</strong></p>
+<p>指定要由托盘管理的加密密钥对及其签名算法。 </p>
+<p><strong>能做什么</strong></p>
+<p>该宏声明了三种结构类型，<code>Public</code>、<code>Signature</code>和<code>Pair</code>。 除了为这三种类型实现各种帮助trait外，<code>Public</code>类型被实现用于生成密钥对、签名和验证签名，<code>Signature</code>类型用于保存给定要使用的签名（例如 SR25519、ED25519 等）的签名属性，以及<code>Pair</code>类型从种子生成公钥-私钥对。 </p>
+<p><strong>文档和注释</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/sp_application_crypto/macro.app_crypto.html">API Documentation</a></li>
+<li>声明了<code>Public</code>结构类型，并实现了定义公钥类型的 <code>sp_application_crypto::AppKey</code> trait，以及用于生成密钥对、签名和验证签名的 <code>sp_application_crypto::RuntimeAppPublic</code> trait。 </li>
+<li>声明了<code>Signature</code>结构类型，并实现了 <code>core::hash::Hash </code>trait，说明如何对具有此签名类型的数据进行哈希处理。 </li>
+<li>声明<code>Pair</code>结构类型以包裹加密货币对。 此类型实现 <code>sp_application_crypto::Pair</code>和 <code>sp_application_crypto::AppKey</code> trait，确定它如何从短语或种子生成公钥-私钥对。 </li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html">The Rust Programming Language ch 19.5 Macros</a></li>
+<li><a target="_blank" rel="noopener" href="https://danielkeep.github.io/tlborm/book">The Little Book of Rust Macros</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/">http://example.com/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">《Substrate Docs》翻译 3.11 Runtime Development - Randomness</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《Substrate Docs》翻译 3.1 Runtime Development - FRAME</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.1%20Getting%20Started%20-%20Welcome/" title="《Substrate Docs》翻译 1.1 Getting Started - Welcome"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.1 Getting Started - Welcome</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.2%20Getting%20Started%20-%20Architecture/" title="《Substrate Docs》翻译 1.2 Getting Started - Architecture"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.2 Getting Started - Architecture</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.3%20Getting%20Started%20-%20Installation/" title="《Substrate Docs》翻译 1.3 Getting Started - Installation"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.3 Getting Started - Installation</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.4%20Getting%20Started%20-%20Getting%20Started%20on%20Windows/" title="《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.5%20Getting%20Started%20-%20Glossary/" title="《Substrate Docs》翻译 1.5 Getting Started - Glossary"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.5 Getting Started - Glossary</div></div></a></div><div><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.1%20Key%20Concepts%20-%20Runtime/" title="《Substrate Docs》 2.1 翻译 Key Concepts - Runtime"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-09</div><div class="title">《Substrate Docs》 2.1 翻译 Key Concepts - Runtime</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">某王姓男子的杂物堆（个人博客），欢迎各位来访orz！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8F%EF%BC%88Macros%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">宏（Macros）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E5%9F%BA%E7%A1%80%EF%BC%88Macro-basics%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">宏基础（Macro basics）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Substrate%E8%BF%90%E8%A1%8C%E6%97%B6%E5%AE%8F"><span class="toc-number">1.2.</span> <span class="toc-text">Substrate运行时宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FRAME-%E5%AE%8F%E5%92%8C%E5%B1%9E%E6%80%A7%EF%BC%88FRAME-macros-and-attributes%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">FRAME 宏和属性（FRAME macros and attributes）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frame-support-pallet"><span class="toc-number">1.3.1.</span> <span class="toc-text">#[frame_support::pallet]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-config"><span class="toc-number">1.3.2.</span> <span class="toc-text">#[pallet::config]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-constant"><span class="toc-number">1.3.3.</span> <span class="toc-text">#[pallet::constant]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-extra-constants"><span class="toc-number">1.3.4.</span> <span class="toc-text">#[pallet::extra_constants]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-pallet"><span class="toc-number">1.3.5.</span> <span class="toc-text">#[pallet::pallet]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-generate-storage-info"><span class="toc-number">1.3.6.</span> <span class="toc-text">#[pallet::generate_storage_info]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-hooks"><span class="toc-number">1.3.7.</span> <span class="toc-text">#[pallet::hooks]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-call"><span class="toc-number">1.3.8.</span> <span class="toc-text">#[pallet::call]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-error"><span class="toc-number">1.3.9.</span> <span class="toc-text">#[pallet::error]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-event"><span class="toc-number">1.3.10.</span> <span class="toc-text">#[pallet::event]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pallet-storage"><span class="toc-number">1.3.11.</span> <span class="toc-text">#[pallet::storage]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7"><span class="toc-number">1.3.12.</span> <span class="toc-text">其他属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E7%9A%84-FRAME-%E5%AE%8F"><span class="toc-number">1.4.</span> <span class="toc-text">额外的 FRAME 宏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#construct-runtime"><span class="toc-number">1.4.1.</span> <span class="toc-text">construct_runtime!</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#parameter-types"><span class="toc-number">1.4.2.</span> <span class="toc-text">parameter_types!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Substrate%E7%B3%BB%E7%BB%9F%E5%BA%93%E5%AE%8F"><span class="toc-number">1.5.</span> <span class="toc-text">Substrate系统库宏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#impl-runtime-apis"><span class="toc-number">1.5.1.</span> <span class="toc-text">impl_runtime_apis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-crypto"><span class="toc-number">1.5.2.</span> <span class="toc-text">app_crypto!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.4 Runtime Development - Storage"/></a><div class="content"><a class="title" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage">《Substrate Docs》翻译 3.4 Runtime Development - Storage</a><time datetime="2022-01-26T17:43:01.000Z" title="Created 2022-01-27 01:43:01">2022-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata">《Substrate Docs》翻译 3.3 Runtime Development - Metadata</a><time datetime="2022-01-25T07:26:01.000Z" title="Created 2022-01-25 15:26:01">2022-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/" title="《Substrate Docs》翻译 3.11 Runtime Development - Randomness"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.11 Runtime Development - Randomness"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.11%20Runtime%20Development%20-%20Randomness/" title="《Substrate Docs》翻译 3.11 Runtime Development - Randomness">《Substrate Docs》翻译 3.11 Runtime Development - Randomness</a><time datetime="2022-01-25T04:42:06.000Z" title="Created 2022-01-25 12:42:06">2022-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/" title="《Substrate Docs》翻译 3.2 Runtime Development - Macros"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.2 Runtime Development - Macros"/></a><div class="content"><a class="title" href="/2022/01/23/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.2%20Runtime%20Development%20-%20Macros/" title="《Substrate Docs》翻译 3.2 Runtime Development - Macros">《Substrate Docs》翻译 3.2 Runtime Development - Macros</a><time datetime="2022-01-23T15:47:38.000Z" title="Created 2022-01-23 23:47:38">2022-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/" title="《Substrate Docs》翻译 3.1 Runtime Development - FRAME"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.1 Runtime Development - FRAME"/></a><div class="content"><a class="title" href="/2022/01/21/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.1%20Runtime%20Development%20-%20FRAME/" title="《Substrate Docs》翻译 3.1 Runtime Development - FRAME">《Substrate Docs》翻译 3.1 Runtime Development - FRAME</a><time datetime="2022-01-20T17:11:43.000Z" title="Created 2022-01-21 01:11:43">2022-01-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
