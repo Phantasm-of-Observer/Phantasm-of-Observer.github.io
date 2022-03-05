@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness | 天了噜Rex的杂物堆</title><meta name="keywords" content="翻译"><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在托盘内实现随机函数（Implement a randomness function inside a pallet）[随机性](Randomness | Substrate_)用于许多应用的计算机程序中。 例如，游戏应用、NFT 创建和选择区块作者都需要一定程度的随机性。 在确定性计算机中很难获得真正的随机性。 在区块链的上下文中尤其如此，当网络中的所有节点必须就链的状态达成一致时。 FRAME">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness">
+<meta property="og:url" content="http://example.com/2022/03/05/%E3%80%8ASubstrate%20How-to%20Guides%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Pallet%20Design%20-%20Implementing%20Randomness/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="在托盘内实现随机函数（Implement a randomness function inside a pallet）[随机性](Randomness | Substrate_)用于许多应用的计算机程序中。 例如，游戏应用、NFT 创建和选择区块作者都需要一定程度的随机性。 在确定性计算机中很难获得真正的随机性。 在区块链的上下文中尤其如此，当网络中的所有节点必须就链的状态达成一致时。 FRAME">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png">
+<meta property="article:published_time" content="2022-03-05T13:41:53.000Z">
+<meta property="article:modified_time" content="2022-03-05T14:40:08.674Z">
+<meta property="article:author" content="天了噜Rex">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/03/05/%E3%80%8ASubstrate%20How-to%20Guides%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Pallet%20Design%20-%20Implementing%20Randomness/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-05 22:40:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-03-05T13:41:53.000Z" title="Created 2022-03-05 21:41:53">2022-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-03-05T14:40:08.674Z" title="Updated 2022-03-05 22:40:08">2022-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E3%80%8ASubstrate-How-to-Guides%E3%80%8B%E7%BF%BB%E8%AF%91/">《Substrate How-to Guides》翻译</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="在托盘内实现随机函数（Implement-a-randomness-function-inside-a-pallet）"><a href="#在托盘内实现随机函数（Implement-a-randomness-function-inside-a-pallet）" class="headerlink" title="在托盘内实现随机函数（Implement a randomness function inside a pallet）"></a>在托盘内实现随机函数（Implement a randomness function inside a pallet）</h1><p>[随机性](<a target="_blank" rel="noopener" href="https://docs.substrate.io/v3/runtime/randomness/">Randomness | Substrate_</a>)用于许多应用的计算机程序中。 例如，游戏应用、NFT 创建和选择区块作者都需要一定程度的随机性。</p>
+<p>在确定性计算机中很难获得真正的随机性。 在区块链的上下文中尤其如此，当网络中的所有节点必须就链的状态达成一致时。 FRAME 使用[Randomness trait](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/traits/trait.Randomness.html">Randomness in frame_support::traits - Rust (substrate.io)</a>)为运行时工程师提供随机性来源。</p>
+<p>本指南解释了如何通过使用<code>random</code>方法和随机数作为主题来利用 FRAME 的随机性特征。 该指南还说明了如何通过将 <code>RandomCollectiveFlip</code> 托盘分配给暴露“随机”类型的托盘的配置特征来向随机值添加熵。</p>
+<h2 id="导入Randomness（Import-Randomness）"><a href="#导入Randomness（Import-Randomness）" class="headerlink" title="导入Randomness（Import Randomness）"></a>导入<code>Randomness</code>（Import <code>Randomness</code>）</h2><p>在您要使用的托盘中，从<code>frame_support</code>导入[Randomness trait](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/traits/trait.Randomness.html">Randomness in frame_support::traits - Rust (substrate.io)</a>)：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> frame_support::traits::Randomness;</span><br></pre></td></tr></table></figure>
+
+<p>将其包含在托盘的配置特征中：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::config]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">frame_system</span></span>::Config &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">MyRandomness</span></span>: Randomness&lt;Self::Hash, Self::BlockNumber&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，<code>Randomness</code> trait指定类型为<code>Output</code>和<code>BlockNumber</code>的通用返回。 在您的托盘中使用来自<code>frame_system</code>的[BlockNumber](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/pallet/trait.Config.html#associatedtype.BlockNumber">Config in frame_system::pallet - Rust (substrate.io)</a>) 和[Hash](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_system/pallet/trait.Config.html#associatedtype.Hash">Config in frame_system::pallet - Rust (substrate.io)</a>)来满足该特征要求。</p>
+<p>正如[此trait的文档](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/traits/trait.Randomness.html">Randomness in frame_support::traits - Rust (substrate.io)</a>)中所述，充其量，此特征可以为您提供很久以前难以预测但最近变得容易预测的随机性。 在评估您的使用情况时请记住这一点。</p>
+<h2 id="创建一个随机数并在您的随机性实现中使用它（Create-a-nonce-and-use-it-in-your-randomness-implementation）"><a href="#创建一个随机数并在您的随机性实现中使用它（Create-a-nonce-and-use-it-in-your-randomness-implementation）" class="headerlink" title="创建一个随机数并在您的随机性实现中使用它（Create a nonce and use it in your randomness implementation）"></a>创建一个随机数并在您的随机性实现中使用它（Create a nonce and use it in your randomness implementation）</h2><p>使用随机数作为<code>frame_support::traits::Randomness::random(subject: &amp;[u8]) </code>方法的主题。</p>
+<p>1.在您的托盘中包含一个随机数有两个步骤：</p>
+<ul>
+<li>创建一个 Nonce 存储项。 存储项可以是 u32 或 u64 类型。 </li>
+<li>创建一个私有 nonce 函数。 该函数每次使用时都会增加随机数。</li>
+</ul>
+<p><code>increment_nonce()</code>私有函数可以通过返回和更新 nonce 的方式实现。 例如：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">get_and_increment_nonce</span></span>() -&gt; <span class="built_in">Vec</span>&lt;<span class="built_in">u8</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> nonce = Nonce::&lt;T&gt;::get();</span><br><span class="line">    Nonce::&lt;T&gt;::put(nonce.wrapping_add(<span class="number">1</span>));</span><br><span class="line">    nonce.encode()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要了解有关包装和编码方法的更多信息，请参阅 Rust 文档中的 [<code>wrapping_add</code>](<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/intrinsics/fn.wrapping_add.html">wrapping_add in std::intrinsics - Rust (rust-lang.org)</a>) 和[encode()](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/frame_support/dispatch/trait.Encode.html#method.encode">Encode in frame_support::dispatch - Rust (substrate.io)</a>)。</p>
+<p>2.在可调度中使用随机性。</p>
+<p>使用随机数，您可以调用 Randomness 公开的 random() 方法。 下面的代码片段是一个模拟示例，假设相关事件和存储项已实现：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[pallet::weight(100)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">create_unique</span></span>(</span><br><span class="line">    origin: OriginFor&lt;T&gt;)</span><br><span class="line">    -&gt; DispatchResultWithPostInfo &#123;</span><br><span class="line">    <span class="comment">// Account calling this dispatchable.</span></span><br><span class="line">    <span class="keyword">let</span> sender = ensure_signed(origin)?;</span><br><span class="line">        <span class="comment">// Random value.</span></span><br><span class="line">        <span class="keyword">let</span> nonce = Self::get_and_increment_nonce();</span><br><span class="line">        <span class="keyword">let</span> (randomValue, _) = T::MyRandomness::random(&amp;nonce);</span><br><span class="line">    <span class="comment">// Write the random value to storage.</span></span><br><span class="line">    &lt;MyStorageItem&lt;T&gt;&gt;::put(randomValue);</span><br><span class="line">    Self::deposit_event(Event::UniqueCreated(randomValue));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.更新托盘的运行时实现。</p>
+<p>因为您已将类型添加到托盘的配置特征，所以<code>Config</code>提供了进一步增强由 <code>Randomness trait</code>派生的随机性的机会。 这是通过使用[Randomness Collective Flip 托盘](<a target="_blank" rel="noopener" href="https://docs.substrate.io/rustdocs/latest/pallet_randomness_collective_flip/index.html">pallet_randomness_collective_flip - Rust (substrate.io)</a>)来完成的。</p>
+<p>将此托盘与<code>Randomness</code>特征一起使用将显着提高<code>random()</code>处理的熵。</p>
+<p>在<code>runtime/src/lib.rs</code>中，假设<code>pallet_random_collective_flip</code>在<code>construct_runtime</code>中被实例化为<code>RandomCollectiveFlip</code>，请通过以下方式指定您的公开类型：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> my_pallet::Config <span class="keyword">for</span> Runtime&#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Event</span></span>;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">MyRandomness</span></span> = RandomCollectiveFlip;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例（Examples）"><a href="#示例（Examples）" class="headerlink" title="示例（Examples）"></a>示例（Examples）</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/paritytech/substrate/blob/master/frame/babe/src/randomness.rs">Randomness used in BABE</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/paritytech/substrate/blob/master/frame/lottery/src/lib.rs#L471">FRAME’s Lottery pallet</a></li>
+</ul>
+<h2 id="相关资料（Realated-material）"><a href="#相关资料（Realated-material）" class="headerlink" title="相关资料（Realated material）"></a>相关资料（Realated material）</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Verifiable_random_function">Verifiable Random Functions</a></p>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/03/05/%E3%80%8ASubstrate%20How-to%20Guides%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Pallet%20Design%20-%20Implementing%20Randomness/">http://example.com/2022/03/05/%E3%80%8ASubstrate%20How-to%20Guides%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Pallet%20Design%20-%20Implementing%20Randomness/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/03/03/%E3%80%8AComputer%20Networking%20A%20Top-Down%20Approach%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%20Chapter%201%20Computer%20Networks%20and%20the%20Internet/"><img class="next-cover" src="https://img-blog.csdnimg.cn/acd635d2772b4d328ebed940a9e1b508.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《Computer Networking A Top-Down Approach》学习笔记 Chapter 1 Computer Networks and the Internet</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.1%20Getting%20Started%20-%20Welcome/" title="《Substrate Docs》翻译 1.1 Getting Started - Welcome"><img class="cover" src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.1 Getting Started - Welcome</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.2%20Getting%20Started%20-%20Architecture/" title="《Substrate Docs》翻译 1.2 Getting Started - Architecture"><img class="cover" src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.2 Getting Started - Architecture</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.3%20Getting%20Started%20-%20Installation/" title="《Substrate Docs》翻译 1.3 Getting Started - Installation"><img class="cover" src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.3 Getting Started - Installation</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.5%20Getting%20Started%20-%20Glossary/" title="《Substrate Docs》翻译 1.5 Getting Started - Glossary"><img class="cover" src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.5 Getting Started - Glossary</div></div></a></div><div><a href="/2022/01/09/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%202.1%20Key%20Concepts%20-%20Runtime/" title="《Substrate Docs》翻译 2.1 Key Concepts - Runtime"><img class="cover" src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-09</div><div class="title">《Substrate Docs》翻译 2.1 Key Concepts - Runtime</div></div></a></div><div><a href="/2021/12/03/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%201.4%20Getting%20Started%20-%20Getting%20Started%20on%20Windows/" title="《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows"><img class="cover" src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">《Substrate Docs》翻译 1.4 Getting Started - Getting Started on Windows</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">某王姓男子的杂物堆（个人博客），欢迎各位来访orz！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8%E6%89%98%E7%9B%98%E5%86%85%E5%AE%9E%E7%8E%B0%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0%EF%BC%88Implement-a-randomness-function-inside-a-pallet%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">在托盘内实现随机函数（Implement a randomness function inside a pallet）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5Randomness%EF%BC%88Import-Randomness%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">导入Randomness（Import Randomness）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%9C%A8%E6%82%A8%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%80%A7%E5%AE%9E%E7%8E%B0%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%83%EF%BC%88Create-a-nonce-and-use-it-in-your-randomness-implementation%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">创建一个随机数并在您的随机性实现中使用它（Create a nonce and use it in your randomness implementation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%88Examples%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">示例（Examples）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99%EF%BC%88Realated-material%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">相关资料（Realated material）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/05/%E3%80%8ASubstrate%20How-to%20Guides%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Pallet%20Design%20-%20Implementing%20Randomness/" title="《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness"><img src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness"/></a><div class="content"><a class="title" href="/2022/03/05/%E3%80%8ASubstrate%20How-to%20Guides%E3%80%8B%E7%BF%BB%E8%AF%91%202.3%20Pallet%20Design%20-%20Implementing%20Randomness/" title="《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness">《Substrate How-to Guides》翻译 2.3 Pallet Design - Implementing Randomness</a><time datetime="2022-03-05T13:41:53.000Z" title="Created 2022-03-05 21:41:53">2022-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/03/%E3%80%8AComputer%20Networking%20A%20Top-Down%20Approach%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%20Chapter%201%20Computer%20Networks%20and%20the%20Internet/" title="《Computer Networking A Top-Down Approach》学习笔记 Chapter 1 Computer Networks and the Internet"><img src="https://img-blog.csdnimg.cn/acd635d2772b4d328ebed940a9e1b508.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Computer Networking A Top-Down Approach》学习笔记 Chapter 1 Computer Networks and the Internet"/></a><div class="content"><a class="title" href="/2022/03/03/%E3%80%8AComputer%20Networking%20A%20Top-Down%20Approach%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%20Chapter%201%20Computer%20Networks%20and%20the%20Internet/" title="《Computer Networking A Top-Down Approach》学习笔记 Chapter 1 Computer Networks and the Internet">《Computer Networking A Top-Down Approach》学习笔记 Chapter 1 Computer Networks and the Internet</a><time datetime="2022-03-03T14:20:30.000Z" title="Created 2022-03-03 22:20:30">2022-03-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/17/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.5%20Runtime%20Development%20-%20Origins/" title="《Substrate Docs》翻译 3.5 Runtime Development - Origins"><img src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.5 Runtime Development - Origins"/></a><div class="content"><a class="title" href="/2022/02/17/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.5%20Runtime%20Development%20-%20Origins/" title="《Substrate Docs》翻译 3.5 Runtime Development - Origins">《Substrate Docs》翻译 3.5 Runtime Development - Origins</a><time datetime="2022-02-16T16:37:20.000Z" title="Created 2022-02-17 00:37:20">2022-02-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage"><img src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.4 Runtime Development - Storage"/></a><div class="content"><a class="title" href="/2022/01/27/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.4%20Runtime%20Development%20-%20Storage/" title="《Substrate Docs》翻译 3.4 Runtime Development - Storage">《Substrate Docs》翻译 3.4 Runtime Development - Storage</a><time datetime="2022-01-26T17:43:01.000Z" title="Created 2022-01-27 01:43:01">2022-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"><img src="https://img-blog.csdnimg.cn/d0fdf90195a647c2a285c48e3ae54f0c.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Substrate Docs》翻译 3.3 Runtime Development - Metadata"/></a><div class="content"><a class="title" href="/2022/01/25/%E3%80%8ASubstrate%20Docs%E3%80%8B%E7%BF%BB%E8%AF%91%203.3%20Runtime%20Development%20-%20Metadata/" title="《Substrate Docs》翻译 3.3 Runtime Development - Metadata">《Substrate Docs》翻译 3.3 Runtime Development - Metadata</a><time datetime="2022-01-25T07:26:01.000Z" title="Created 2022-01-25 15:26:01">2022-01-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
