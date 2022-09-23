@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁 | 天了噜Rex的杂物堆</title><meta name="keywords" content="摘要"><meta name="author" content="天了噜Rex"><meta name="copyright" content="天了噜Rex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第三章 处理机调度与死锁分配处理机的任务是由处理机调度程序完成的。由于处理机是最重要的计算机资源，提高处理机的利用率及改善系统性能（吞吐量、响应时间），在很大程度上取决于处理机调度性能的好坏。  3.1 处理机调度的层次对于批量型作业而言，通常需要经历作业调度(又称高级调度或长程调度)和进程调度(又称 低级调度或短程调度)两个过程后方能获得处理机；对于终端型作业，则通常只需经过进程 调度即可获得处">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁">
+<meta property="og:url" content="http://example.com/2022/09/23/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/index.html">
+<meta property="og:site_name" content="天了噜Rex的杂物堆">
+<meta property="og:description" content="第三章 处理机调度与死锁分配处理机的任务是由处理机调度程序完成的。由于处理机是最重要的计算机资源，提高处理机的利用率及改善系统性能（吞吐量、响应时间），在很大程度上取决于处理机调度性能的好坏。  3.1 处理机调度的层次对于批量型作业而言，通常需要经历作业调度(又称高级调度或长程调度)和进程调度(又称 低级调度或短程调度)两个过程后方能获得处理机；对于终端型作业，则通常只需经过进程 调度即可获得处">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center">
+<meta property="article:published_time" content="2022-09-23T02:43:49.000Z">
+<meta property="article:modified_time" content="2022-09-23T04:21:59.343Z">
+<meta property="article:author" content="天了噜Rex">
+<meta property="article:tag" content="摘要">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/09/23/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-23 12:21:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">9</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">天了噜Rex的杂物堆</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-23T02:43:49.000Z" title="Created 2022-09-23 10:43:49">2022-09-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-23T04:21:59.343Z" title="Updated 2022-09-23 12:21:59">2022-09-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88-%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">《计算机操作系统(汤小丹版)》学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第三章-处理机调度与死锁"><a href="#第三章-处理机调度与死锁" class="headerlink" title="第三章 处理机调度与死锁"></a>第三章 处理机调度与死锁</h1><p>分配处理机的任务是由处理机调度程序完成的。由于处理机是最重要的计算机资源，提高处理机的利用率及改善系统性能（吞吐量、响应时间），在很大程度上取决于处理机调度性能的好坏。</p>
+<hr>
+<h2 id="3-1-处理机调度的层次"><a href="#3-1-处理机调度的层次" class="headerlink" title="3.1 处理机调度的层次"></a>3.1 处理机调度的层次</h2><p>对于批量型作业而言，通常需要经历作业调度(又称高级调度或长程调度)和进程调度(又称 低级调度或短程调度)两个过程后方能获得处理机；对于终端型作业，则通常只需经过进程 调度即可获得处理机。在较完善的操作系统中，为提高内存的利用率，往往还设置了中级 调度(又称中程调度)。对于上述的每一级调度，又都可采用不同的调度方式和调度算法。对 于一个批处理型作业，从进入系统并驻留在外存的后备队列开始，直至作业运行完毕，可 能要经历上述的三级调度。</p>
+<h3 id="3-1-1-高级调度"><a href="#3-1-1-高级调度" class="headerlink" title="3.1.1 高级调度"></a>3.1.1 高级调度</h3><p>高级调度（High Level Scheduling）又称为作业调度或长程调度（LongTerm Scheduling），其主要功能是根据某种算法，把外存上处于后备队列中的那些作业调入内存。</p>
+<h4 id="作业和作业步"><a href="#作业和作业步" class="headerlink" title="作业和作业步"></a>作业和作业步</h4><p><strong>作业（Job）：</strong>是比程序更广泛的概念，不仅包含了通常的程序和数据，还配有一份作业说明书。</p>
+<p><strong>作业步（Job Step）：</strong>一个典型的作业可分为三个作业步，即①”编译“作业步，②”连结装配“作业步，③”运行“作业步。</p>
+<p><strong>作业流：</strong>若干个作业进入系统后，被依次存放在外存上，就形成了输入的作业流。</p>
+<h4 id="作业控制快JCB（Job-Control-Block）"><a href="#作业控制快JCB（Job-Control-Block）" class="headerlink" title="作业控制快JCB（Job Control Block）"></a>作业控制快JCB（Job Control Block）</h4><p>为了管理和调度作业，在多道批处理系统中为每个作业设置了一个作业控制块，如同 进程控制块是进程在系统中存在的标志一样，它是作业在系统中存在的标志，其中保存了 系统对作业进行管理和调度所需的全部信息。</p>
+<h4 id="作业调度"><a href="#作业调度" class="headerlink" title="作业调度"></a>作业调度</h4><p>作业调度又称<strong>接纳调度（Admission Scheduling）</strong>，主要功能是是根据作业控制块中的信息，审查系统能否满足用户作业的资源 需求，以及按照一定的算法，从外存的后备队列中选取某些作业调入内存，并为它们创建 进程、分配必要的资源。然后再将新创建的进程插入就绪队列，准备执行。</p>
+<p><strong>周转时间</strong>(作业周转时间)指的是从作业被提交给系统开始, 到作业完成为止的这段时间，包括四部分：</p>
+<ul>
+<li>作业在外存后备队列上等待作业调度的时间。</li>
+<li>进程在就绪队列上等待进程调度的时间。</li>
+<li>进程在cpu上执行的时间。</li>
+<li>进程等待I/O操作完成的时间。</li>
+</ul>
+<blockquote>
+<p>周转时间 = 作业完成时间 − 作业提交时间</p>
+<p>平均周转时间 = (作业1的周转时间 + … + 作业n的周转时间) / n</p>
+</blockquote>
+<p>对用户而言，总希望自己作业的周转时间尽可能的少，最好周转时间就等于作业的执 行时间。然而对系统来说，则希望作业的平均周转时间尽可能少，有利于提高 CPU 的利用率和系统的吞吐量。</p>
+<p>在每次执行作业调度时间，都须做出以下两个决定：</p>
+<ul>
+<li>决定接纳多少个作业。作业调度每次要接纳多少个作业进入内存，取决于**多道程序度(Degree of Multiprogramming)**， 即允许多少个作业同时在内存中运行。</li>
+<li>决定接纳哪些作业。应将哪些作业从外存调入内存，这将取决于所采用的<strong>调度算法</strong>，主要有先来先服务调度算法、短作业优先调度算法、作业优先级调度算法、”响应比高者优先”调度算法。</li>
+</ul>
+<p>在批处理系统中，作业进入系统后，总是先驻留在外存的后备队列上，因此需要有作业调度的过程。在分时系统中，为了做到及时响应，用户通过键盘输入的命令或数据等都是被直接送入内存的，因而无需再配置作业调度机制，但也需要有某些限制性措施来限制进入系统的用户数。在实时系统中通常也不需要作业调度。</p>
+<h3 id="3-1-2-低级调度"><a href="#3-1-2-低级调度" class="headerlink" title="3.1.2 低级调度"></a>3.1.2 低级调度</h3><p>低级调度**(Low Level Scheduling)** 称为进程调度或<strong>短程调度(ShortTerm  Scheduling)<strong>，它所调度的对象是</strong>进程</strong>(或内核级线程)。进程调度是最基本的一种调度，在多道批处理、分时和实时三种类型的 OS 中，都必须配置这级调度。</p>
+<h4 id="低级调度的功能"><a href="#低级调度的功能" class="headerlink" title="低级调度的功能"></a>低级调度的功能</h4><p>①保存处理机的现场信息。</p>
+<p>②按某种算法选取进程。</p>
+<p>③把处理器分配进程。由**分派程序(Dispatcher)**把处理器分配给进程。此时需为选中 的进程恢复处理机现场，即把选中进程的进程控制块内有关处理机现场的信息装入处理器 相应的各个寄存器中，把处理器的控制权交给该进程，让它从取出的断点处开始继续运行。</p>
+<blockquote>
+<p><strong>分派程序</strong>功能包括：</p>
+<ul>
+<li>切换上下文。</li>
+<li>切换到用户模式。</li>
+<li>跳转用户程序的合适位置来重启程序。</li>
+</ul>
+</blockquote>
+<h4 id="进程调度中的三个基本机制"><a href="#进程调度中的三个基本机制" class="headerlink" title="进程调度中的三个基本机制"></a>进程调度中的三个基本机制</h4><p>①排队器。</p>
+<p>②分派器（分派程序）。</p>
+<p>③上下文切换机制。</p>
+<h4 id="进程调度方式"><a href="#进程调度方式" class="headerlink" title="进程调度方式"></a>进程调度方式</h4><p>①<strong>非抢占方式(Nonpreemptive Mode)</strong></p>
+<p>在采用这种调度方式时，一旦把处理机分配给某进程后，不管它要运行多长时间，都一直让它运行下去，决不会因为时钟中断等原因而抢占正在运行进程的处理机，也不允许其它进程抢占已经分配给它的处理机。直至该进程完成，自愿释放处理机，或发生某事件而被阻塞时，才再把处理机分配给其他进程。 </p>
+<p>在采用非抢占调度方式时，可能引起进程调度的因素可归结为如下几个： (1) 正在执行的进程执行完毕，或因发生某事件而不能再继续执行； (2) 执行中的进程因提出 I/O 请求而暂停执行； (3) 在进程通信或同步过程中执行了某种原语操作，如 P 操作(wait 操作)、Block 原语、 Wakeup 原语等。</p>
+<p>②<strong>抢占方式(Preemptive Mode)</strong></p>
+<p>这种调度方式允许调度程序根据某种原则去暂停某个正在执行的进程，将已分配给该进程的处理机重新分配给另一进程。</p>
+<p>抢占方式的优点是，可以防止一个长进程长时间占用处理机，能为大多数进程提供更公平的服务，特别是能满足对响应时间有着较严格要求的实时任务的需求。但抢占方式比非抢占方式调度所需付出的开销较大。</p>
+<p>抢占调度方式基于一定原则，主要有如下几条： (1) 优先权原则。通常是对一些重要的和紧急的作业赋予较高的优先权。当这种作业到达时，如果其优先权比正在执行进程的优先权高，便停止正在执行(当前)的进程，将处理机 分配给优先权高的新到的进程，使之执行；或者说，允许优先权高的新到进程抢占当前进程的处理机。 (2) 短作业(进程)优先原则。当新到达的作业(进程)比正在执行的作业(进程)明显的短 时，将暂停当前长作业(进程)的执行，将处理机分配给新到的短作业(进程)，使之优先执行； 或者说，短作业(进程)可以抢占当前较长作业(进程)的处理机。 (3) 时间片原则。各进程按时间片轮流运行，当一个时间片用完后，便停止该进程的执行而重新进行调度。这种原则适用于分时系统、大多数的实时系统，以及要求较高的批处理系统。</p>
+<h3 id="3-1-3-中级调度"><a href="#3-1-3-中级调度" class="headerlink" title="3.1.3 中级调度"></a>3.1.3 中级调度</h3><p>中级调度(<strong>Intermediate Level Scheduling</strong>)又称**中程调度(Medium-Term Scheduling)**。引入中级调度的主要目的是为了提高内存利用率和系统吞吐量。为此，应使那些暂时不能运行的进程不再占用宝贵的内存资源，而将它们调至外存上去等待，把此时的进程状态称为就 绪驻外存状态或挂起状态。当这些进程重又具备运行条件且内存又稍有空闲时，由中级调 度来决定把外存上的那些又具备运行条件的就绪进程重新调入内存，并修改其状态为就绪 状态，挂在就绪队列上等待进程调度。</p>
+<h2 id="3-2-调度队列模型和调度准则"><a href="#3-2-调度队列模型和调度准则" class="headerlink" title="3.2 调度队列模型和调度准则"></a>3.2 调度队列模型和调度准则</h2><h3 id="3-2-1-调度队列模型"><a href="#3-2-1-调度队列模型" class="headerlink" title="3.2.1 调度队列模型"></a>3.2.1 调度队列模型</h3><p>![image-20220923114459545](C:\Users\Rex Wang\AppData\Roaming\Typora\typora-user-images\image-20220923114459545.png)</p>
+<p>![image-20220923114526070](C:\Users\Rex Wang\AppData\Roaming\Typora\typora-user-images\image-20220923114526070.png)</p>
+<p>![image-20220923114537444](C:\Users\Rex Wang\AppData\Roaming\Typora\typora-user-images\image-20220923114537444.png)</p>
+<h3 id="3-2-2-选择调度方式和调度算法的若干准则"><a href="#3-2-2-选择调度方式和调度算法的若干准则" class="headerlink" title="3.2.2 选择调度方式和调度算法的若干准则"></a>3.2.2 选择调度方式和调度算法的若干准则</h3><h4 id="面向用户的准则"><a href="#面向用户的准则" class="headerlink" title="面向用户的准则"></a>面向用户的准则</h4><p>①周转时间短</p>
+<p>②响应时间快</p>
+<p>③截止时间的保证</p>
+<p>④优先权准则</p>
+<h4 id="面向系统的准则"><a href="#面向系统的准则" class="headerlink" title="面向系统的准则"></a>面向系统的准则</h4><p>①系统吞吐量高</p>
+<p>②处理机利用率好</p>
+<p>③各类资源的平衡利用</p>
+<h2 id="3-3-调度算法"><a href="#3-3-调度算法" class="headerlink" title="3.3 调度算法"></a>3.3 调度算法</h2><h3 id="3-3-1-先来先服务和短作业（进程）优先调度算法"><a href="#3-3-1-先来先服务和短作业（进程）优先调度算法" class="headerlink" title="3.3.1 先来先服务和短作业（进程）优先调度算法"></a>3.3.1 先来先服务和短作业（进程）优先调度算法</h3><h4 id="先来先服务调度算法"><a href="#先来先服务调度算法" class="headerlink" title="先来先服务调度算法"></a>先来先服务调度算法</h4><p>先来先服务(<strong>FCFS</strong>)调度算法是一种最简单的调度算法，该算法既可用于作业调度，也 可用于进程调度。FCFS 算法比较有利于长作业(进程)，而不利于短作业(进程)。</p>
+<p>![image-20220923121545615](C:\Users\Rex Wang\AppData\Roaming\Typora\typora-user-images\image-20220923121545615.png)</p>
+<p>据此可知，FCFS 调度算法有利于 CPU 繁忙型的作业，而 不利于 I/O 繁忙型的作业(进程)。<strong>CPU 繁忙型作业</strong>是指该类作业需要大量的 CPU 时间进行 计算，而很少请求 I/O。通常的科学计算便属于 CPU 繁忙型作业。<strong>I/O 繁忙型作业</strong>是指 CPU 进行处理时需频繁地请求 I/O。目前的大多数事务处理都属于 I/O 繁忙型作业。</p>
+<p>![image-20220923121910450](C:\Users\Rex Wang\AppData\Roaming\Typora\typora-user-images\image-20220923121910450.png)</p>
+<h2 id="3-4-实时调度"><a href="#3-4-实时调度" class="headerlink" title="3.4 实时调度"></a>3.4 实时调度</h2><h2 id="3-5-产生死锁的原因和必要条件"><a href="#3-5-产生死锁的原因和必要条件" class="headerlink" title="3.5 产生死锁的原因和必要条件"></a>3.5 产生死锁的原因和必要条件</h2><h2 id="3-6-预防死锁的方法"><a href="#3-6-预防死锁的方法" class="headerlink" title="3.6 预防死锁的方法"></a>3.6 预防死锁的方法</h2><h2 id="3-7-死锁的检测与解除"><a href="#3-7-死锁的检测与解除" class="headerlink" title="3.7 死锁的检测与解除"></a>3.7 死锁的检测与解除</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">天了噜Rex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/09/23/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/">http://example.com/2022/09/23/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%91%98%E8%A6%81/">摘要</a></div><div class="post_share"><div class="social-share" data-image="https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/21/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"><img class="next-cover" src="https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">《计算机操作系统(汤小丹版)》学习笔记_第二章 进程管理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/11/17/%E3%80%8AC%20Primer%20Plus%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%83%E7%AB%A0%20C%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%EF%BC%9A%E5%88%86%E6%94%AF%E5%92%8C%E8%B7%B3%E8%BD%AC/" title="《C Primer Plus》学习笔记_第七章 C控制语句：分支和跳转"><img class="cover" src="https://img-blog.csdnimg.cn/8549eda495b1490ebaa71c47b1fece85.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-17</div><div class="title">《C Primer Plus》学习笔记_第七章 C控制语句：分支和跳转</div></div></a></div><div><a href="/2021/11/16/%E3%80%8AC%20Primer%20Plus%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%88%9D%E8%AF%86C%E8%AF%AD%E8%A8%80/" title="《C Primer Plus》学习笔记_第一章 初识C语言"><img class="cover" src="https://img-blog.csdnimg.cn/8549eda495b1490ebaa71c47b1fece85.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-16</div><div class="title">《C Primer Plus》学习笔记_第一章 初识C语言</div></div></a></div><div><a href="/2021/11/17/%E3%80%8AC%20Primer%20Plus%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E6%95%B0%E6%8D%AE%E5%92%8CC/" title="《C Primer Plus》学习笔记_第三章 数据和C"><img class="cover" src="https://img-blog.csdnimg.cn/8549eda495b1490ebaa71c47b1fece85.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-17</div><div class="title">《C Primer Plus》学习笔记_第三章 数据和C</div></div></a></div><div><a href="/2021/11/17/%E3%80%8AC%20Primer%20Plus%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%8C%E7%AB%A0%20C%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/" title="《C Primer Plus》学习笔记_第二章 C语言概述"><img class="cover" src="https://img-blog.csdnimg.cn/8549eda495b1490ebaa71c47b1fece85.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-17</div><div class="title">《C Primer Plus》学习笔记_第二章 C语言概述</div></div></a></div><div><a href="/2021/11/17/%E3%80%8AC%20Primer%20Plus%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%AF%AD%E5%8F%A5/" title="《C Primer Plus》学习笔记_第五章 运算符、表达式和语句"><img class="cover" src="https://img-blog.csdnimg.cn/8549eda495b1490ebaa71c47b1fece85.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-17</div><div class="title">《C Primer Plus》学习笔记_第五章 运算符、表达式和语句</div></div></a></div><div><a href="/2021/11/17/%E3%80%8AC%20Primer%20Plus%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E5%85%AD%E7%AB%A0%20C%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%EF%BC%9A%E5%BE%AA%E7%8E%AF/" title="《C Primer Plus》学习笔记_第六章 C控制语句：循环"><img class="cover" src="https://img-blog.csdnimg.cn/8549eda495b1490ebaa71c47b1fece85.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-17</div><div class="title">《C Primer Plus》学习笔记_第六章 C控制语句：循环</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">天了噜Rex</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">51</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Phantasm-of-Observer"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">某王姓男子的杂物堆（个人博客），欢迎各位来访orz！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81"><span class="toc-number">1.</span> <span class="toc-text">第三章 处理机调度与死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E7%9A%84%E5%B1%82%E6%AC%A1"><span class="toc-number">1.1.</span> <span class="toc-text">3.1 处理机调度的层次</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E9%AB%98%E7%BA%A7%E8%B0%83%E5%BA%A6"><span class="toc-number">1.1.1.</span> <span class="toc-text">3.1.1 高级调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E5%92%8C%E4%BD%9C%E4%B8%9A%E6%AD%A5"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">作业和作业步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E6%8E%A7%E5%88%B6%E5%BF%ABJCB%EF%BC%88Job-Control-Block%EF%BC%89"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">作业控制快JCB（Job Control Block）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E8%B0%83%E5%BA%A6"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">作业调度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E4%BD%8E%E7%BA%A7%E8%B0%83%E5%BA%A6"><span class="toc-number">1.1.2.</span> <span class="toc-text">3.1.2 低级调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8E%E7%BA%A7%E8%B0%83%E5%BA%A6%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">低级调度的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%AD%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%9C%BA%E5%88%B6"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">进程调度中的三个基本机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">进程调度方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E4%B8%AD%E7%BA%A7%E8%B0%83%E5%BA%A6"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.1.3 中级调度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E8%B0%83%E5%BA%A6%E9%98%9F%E5%88%97%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%B0%83%E5%BA%A6%E5%87%86%E5%88%99"><span class="toc-number">1.2.</span> <span class="toc-text">3.2 调度队列模型和调度准则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E8%B0%83%E5%BA%A6%E9%98%9F%E5%88%97%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.1.</span> <span class="toc-text">3.2.1 调度队列模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E9%80%89%E6%8B%A9%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F%E5%92%8C%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E7%9A%84%E8%8B%A5%E5%B9%B2%E5%87%86%E5%88%99"><span class="toc-number">1.2.2.</span> <span class="toc-text">3.2.2 选择调度方式和调度算法的若干准则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%94%A8%E6%88%B7%E7%9A%84%E5%87%86%E5%88%99"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">面向用户的准则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%87%86%E5%88%99"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">面向系统的准则</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">3.3 调度算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%E5%92%8C%E7%9F%AD%E4%BD%9C%E4%B8%9A%EF%BC%88%E8%BF%9B%E7%A8%8B%EF%BC%89%E4%BC%98%E5%85%88%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.3.1 先来先服务和短作业（进程）优先调度算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">先来先服务调度算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E5%AE%9E%E6%97%B6%E8%B0%83%E5%BA%A6"><span class="toc-number">1.4.</span> <span class="toc-text">3.4 实时调度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.5.</span> <span class="toc-text">3.5 产生死锁的原因和必要条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text">3.6 预防死锁的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-7-%E6%AD%BB%E9%94%81%E7%9A%84%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%A7%A3%E9%99%A4"><span class="toc-number">1.7.</span> <span class="toc-text">3.7 死锁的检测与解除</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/23/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/" title="《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁"><img src="https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁"/></a><div class="content"><a class="title" href="/2022/09/23/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/" title="《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁">《计算机操作系统(汤小丹版)》学习笔记_第三章 处理机调度与死锁</a><time datetime="2022-09-23T02:43:49.000Z" title="Created 2022-09-23 10:43:49">2022-09-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/21/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" title="《计算机操作系统(汤小丹版)》学习笔记_第二章 进程管理"><img src="https://img-blog.csdnimg.cn/f9eda4f611d94fd5950b7fff2f4dc407.jpeg#pic_center" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《计算机操作系统(汤小丹版)》学习笔记_第二章 进程管理"/></a><div class="content"><a class="title" href="/2022/09/21/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(%E6%B1%A4%E5%B0%8F%E4%B8%B9%E7%89%88)%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" title="《计算机操作系统(汤小丹版)》学习笔记_第二章 进程管理">《计算机操作系统(汤小丹版)》学习笔记_第二章 进程管理</a><time datetime="2022-09-21T11:50:49.000Z" title="Created 2022-09-21 19:50:49">2022-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/%E3%80%8ARust%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%81%E5%AE%9E%E6%88%98%E4%B8%8E%E8%BF%9B%E9%98%B6%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%88%9D%E8%AF%86Rust/" title="《Rust编程：入门、实战与进阶》学习笔记_第一章 初识Rust"><img src="https://img-blog.csdnimg.cn/887f859ef4b3445da7def0a72213d12a.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Rust编程：入门、实战与进阶》学习笔记_第一章 初识Rust"/></a><div class="content"><a class="title" href="/2022/07/08/%E3%80%8ARust%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%81%E5%AE%9E%E6%88%98%E4%B8%8E%E8%BF%9B%E9%98%B6%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%88%9D%E8%AF%86Rust/" title="《Rust编程：入门、实战与进阶》学习笔记_第一章 初识Rust">《Rust编程：入门、实战与进阶》学习笔记_第一章 初识Rust</a><time datetime="2022-07-08T12:40:53.000Z" title="Created 2022-07-08 20:40:53">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/08/%E3%80%8ARust%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%81%E5%AE%9E%E6%88%98%E4%B8%8E%E8%BF%9B%E9%98%B6%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E5%8F%98%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="《Rust编程：入门、实战与进阶》学习笔记_第二章 变量与数据类型"><img src="https://img-blog.csdnimg.cn/887f859ef4b3445da7def0a72213d12a.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《Rust编程：入门、实战与进阶》学习笔记_第二章 变量与数据类型"/></a><div class="content"><a class="title" href="/2022/07/08/%E3%80%8ARust%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%85%A5%E9%97%A8%E3%80%81%E5%AE%9E%E6%88%98%E4%B8%8E%E8%BF%9B%E9%98%B6%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E5%8F%98%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="《Rust编程：入门、实战与进阶》学习笔记_第二章 变量与数据类型">《Rust编程：入门、实战与进阶》学习笔记_第二章 变量与数据类型</a><time datetime="2022-07-08T12:40:53.000Z" title="Created 2022-07-08 20:40:53">2022-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/07/%E3%80%8A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%20%E7%AC%AC1%E7%AB%A0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="《汇编语言》学习笔记 第1章 基础知识"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《汇编语言》学习笔记 第1章 基础知识"/></a><div class="content"><a class="title" href="/2022/03/07/%E3%80%8A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%20%E7%AC%AC1%E7%AB%A0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="《汇编语言》学习笔记 第1章 基础知识">《汇编语言》学习笔记 第1章 基础知识</a><time datetime="2022-03-07T00:19:52.000Z" title="Created 2022-03-07 08:19:52">2022-03-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 天了噜Rex</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
